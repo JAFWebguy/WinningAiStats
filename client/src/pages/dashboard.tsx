@@ -35,7 +35,7 @@ export default function Dashboard() {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text flex-1"
           >
-            Who's Winning
+            Who's Winning the LLM Race
           </motion.h1>
           <ThemeToggle />
         </div>
