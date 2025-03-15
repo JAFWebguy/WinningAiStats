@@ -147,6 +147,9 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
+            <div className="mt-6 text-sm text-cyan-400/70 italic text-right">
+              Source: FirstPageSage, March 6, 2025
+            </div>
           </Card>
         </motion.div>
       </main>
