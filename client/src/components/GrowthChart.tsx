@@ -7,6 +7,16 @@ interface GrowthChartProps {
   }>;
 }
 
+const COLORS = [
+  'rgba(0, 255, 255, 0.8)',   // Cyan - ChatGPT
+  'rgba(255, 0, 255, 0.7)',   // Magenta - Microsoft Copilot
+  'rgba(0, 255, 0, 0.7)',     // Green - Google Gemini
+  'rgba(255, 255, 0, 0.7)',   // Yellow - Perplexity
+  'rgba(255, 51, 102, 0.7)',  // Pink - Claude AI
+  'rgba(51, 153, 255, 0.7)',  // Blue - Grok
+  'rgba(255, 128, 0, 0.7)'    // Orange - Deepseek
+];
+
 export function GrowthChart({ data }: GrowthChartProps) {
   return (
     <ResponsiveContainer width="100%" height={400}>
@@ -20,11 +30,12 @@ export function GrowthChart({ data }: GrowthChartProps) {
         }}
       >
         <defs>
-          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(0, 255, 255, 0.8)" stopOpacity={0.9} />
-            <stop offset="50%" stopColor="rgba(0, 128, 255, 0.7)" stopOpacity={0.7} />
-            <stop offset="100%" stopColor="rgba(0, 0, 255, 0.6)" stopOpacity={0.6} />
-          </linearGradient>
+          {COLORS.map((color, index) => (
+            <linearGradient key={`barGradient-${index}`} id={`barGradient-${index}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.9} />
+              <stop offset="100%" stopColor={color} stopOpacity={0.6} />
+            </linearGradient>
+          ))}
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0, 255, 255, 0.1)" />
         <XAxis 
@@ -46,12 +57,17 @@ export function GrowthChart({ data }: GrowthChartProps) {
           }}
           formatter={(value: number) => [`${value}%`, 'Quarterly Growth']}
         />
-        <Bar 
-          dataKey="growth" 
-          fill="url(#barGradient)"
-          radius={[4, 4, 0, 0]}
-          style={{ filter: 'blur(0.5px)' }}
-        />
+        {data.map((_, index) => (
+          <Bar 
+            key={`bar-${index}`}
+            dataKey="growth"
+            fill={`url(#barGradient-${index})`}
+            radius={[4, 4, 0, 0]}
+            style={{ filter: 'blur(0.5px)' }}
+            stackId="stack"
+            data={[data[index]]}
+          />
+        ))}
       </BarChart>
     </ResponsiveContainer>
   );
