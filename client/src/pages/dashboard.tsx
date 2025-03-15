@@ -5,6 +5,7 @@ import { MarketShareChart } from "@/components/MarketShareChart";
 import { GrowthChart } from "@/components/GrowthChart";
 import { StatsCard } from "@/components/StatsCard";
 import { BrainAnimation } from "@/components/BrainAnimation";
+import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
 
 const marketShareData = [
   { name: "ChatGPT", share: 59.70, growth: 8, description: "General-purpose AI chatbot", llms: "GPT-3.5, GPT-4" },
@@ -137,7 +138,13 @@ export default function Dashboard() {
                         index === marketShareData.length - 1 ? 'border-b-0' : ''
                       }`}
                     >
-                      <td className="py-4 px-4">{item.name}</td>
+                      <td className="py-4 px-4">
+                        <PlatformInfoDrawer platform={item.name}>
+                          <button className="hover:text-cyan-400 transition-colors">
+                            {item.name}
+                          </button>
+                        </PlatformInfoDrawer>
+                      </td>
                       <td className="py-4 px-4">{item.share}%</td>
                       <td className="py-4 px-4 text-cyan-400">{item.growth}% ▲</td>
                       <td className="py-4 px-4">{item.description}</td>
