@@ -10,12 +10,12 @@ interface GrowthChartProps {
 // Keep colors consistent with pie chart
 const COLORS = [
   'rgba(0, 255, 255, 0.8)',   // Cyan - ChatGPT
-  'rgba(255, 0, 255, 0.7)',   // Magenta - Microsoft Copilot
-  'rgba(0, 255, 0, 0.7)',     // Green - Google Gemini
-  'rgba(255, 255, 0, 0.7)',   // Yellow - Perplexity
-  'rgba(255, 51, 102, 0.7)',  // Pink - Claude AI
-  'rgba(51, 153, 255, 0.7)',  // Blue - Grok
-  'rgba(255, 128, 0, 0.7)'    // Orange - Deepseek
+  'rgba(255, 0, 255, 0.8)',   // Magenta - Microsoft Copilot
+  'rgba(0, 255, 0, 0.8)',     // Green - Google Gemini
+  'rgba(255, 255, 0, 0.8)',   // Yellow - Perplexity
+  'rgba(255, 51, 102, 0.8)',  // Pink - Claude AI
+  'rgba(51, 153, 255, 0.8)',  // Blue - Grok
+  'rgba(255, 128, 0, 0.8)'    // Orange - Deepseek
 ];
 
 export function GrowthChart({ data }: GrowthChartProps) {
