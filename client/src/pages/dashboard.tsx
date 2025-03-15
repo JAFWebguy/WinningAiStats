@@ -30,7 +30,7 @@ export default function Dashboard() {
 
       <nav className="relative border-b border-cyan-500/20 bg-black/30 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text flex-1"
@@ -43,7 +43,7 @@ export default function Dashboard() {
 
       <main className="container relative mx-auto px-4 py-8 z-10">
         <div className="mb-8">
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-cyan-400 text-lg holographic-text"
@@ -75,37 +75,35 @@ export default function Dashboard() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            whileHover={{ scale: 1.02 }}
-            className="transform transition-all duration-300 animate-hologram"
-          >
-            <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_15px_rgba(0,255,255,0.15)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
-                Market Share Distribution
-              </h2>
-              <MarketShareChart data={marketShareData} />
-            </Card>
-          </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          whileHover={{ scale: 1.02 }}
+          className="transform transition-all duration-300 animate-hologram mb-6"
+        >
+          <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_15px_rgba(0,255,255,0.15)] animate-pulse-border overflow-hidden">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
+              Market Share Distribution
+            </h2>
+            <MarketShareChart data={marketShareData} />
+          </Card>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            whileHover={{ scale: 1.02 }}
-            className="transform transition-all duration-300 animate-hologram"
-          >
-            <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_15px_rgba(0,255,255,0.15)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
-                Quarterly Growth Rates
-              </h2>
-              <GrowthChart data={marketShareData} />
-            </Card>
-          </motion.div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          whileHover={{ scale: 1.02 }}
+          className="transform transition-all duration-300 animate-hologram mb-6"
+        >
+          <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_15px_rgba(0,255,255,0.15)] animate-pulse-border overflow-hidden">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
+              Quarterly Growth Rates
+            </h2>
+            <GrowthChart data={marketShareData} />
+          </Card>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -131,8 +129,8 @@ export default function Dashboard() {
                 </thead>
                 <tbody>
                   {marketShareData.map((item, index) => (
-                    <tr 
-                      key={item.name} 
+                    <tr
+                      key={item.name}
                       className={`border-b border-cyan-500/20 hover:bg-cyan-500/5 transition-colors ${
                         index === marketShareData.length - 1 ? 'border-b-0' : ''
                       }`}

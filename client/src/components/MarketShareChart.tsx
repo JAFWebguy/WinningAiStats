@@ -17,7 +17,7 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           data={data}
           cx="50%"
           cy="50%"
-          labelLine={false}
+          labelLine={{ stroke: '#00FFFF', strokeWidth: 1, opacity: 0.5 }}
           label={({ name, percent }) => `${name} (${(percent * 100).toFixed(1)}%)`}
           outerRadius={150}
           fill="#8884d8"
@@ -36,7 +36,14 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
             boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)'
           }}
         />
-        <Legend />
+        <Legend 
+          verticalAlign="bottom"
+          align="center"
+          wrapperStyle={{
+            opacity: 0.8,
+            fontSize: '12px'
+          }}
+        />
       </PieChart>
     </ResponsiveContainer>
   );
