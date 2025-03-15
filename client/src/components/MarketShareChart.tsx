@@ -7,12 +7,28 @@ interface MarketShareChartProps {
   }>;
 }
 
-const COLORS = ['#00FFFF', '#FF00FF', '#00FF00', '#FFFF00', '#FF3366'];
+const COLORS = [
+  'rgba(0, 255, 255, 0.8)',   // Cyan
+  'rgba(255, 0, 255, 0.7)',   // Magenta
+  'rgba(0, 255, 0, 0.7)',     // Green
+  'rgba(255, 255, 0, 0.7)',   // Yellow
+  'rgba(255, 51, 102, 0.7)',  // Pink
+  'rgba(51, 153, 255, 0.7)',  // Blue
+  'rgba(255, 128, 0, 0.7)'    // Orange
+];
 
 export function MarketShareChart({ data }: MarketShareChartProps) {
   return (
     <ResponsiveContainer width="100%" height={400}>
       <PieChart>
+        <defs>
+          {COLORS.map((color, index) => (
+            <linearGradient key={`gradient-${index}`} id={`colorGradient-${index}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.9} />
+              <stop offset="100%" stopColor={color} stopOpacity={0.6} />
+            </linearGradient>
+          ))}
+        </defs>
         <Pie
           data={data}
           cx="50%"
@@ -24,17 +40,21 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           dataKey="share"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} fillOpacity={0.8} />
+            <Cell 
+              key={`cell-${index}`} 
+              fill={`url(#colorGradient-${index})`} 
+              style={{ filter: 'blur(0.5px)' }}
+            />
           ))}
         </Pie>
         <Tooltip
-          formatter={(value: number) => [`${value.toFixed(2)}%`, 'Market Share']}
           contentStyle={{ 
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
             border: '1px solid rgba(0, 255, 255, 0.2)',
             borderRadius: '8px',
             boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)'
           }}
+          formatter={(value: number) => [`${value.toFixed(2)}%`, 'Market Share']}
         />
         <Legend 
           verticalAlign="bottom"

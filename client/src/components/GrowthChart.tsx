@@ -20,20 +20,21 @@ export function GrowthChart({ data }: GrowthChartProps) {
         }}
       >
         <defs>
-          <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#00FFFF" stopOpacity={0.8} />
-            <stop offset="100%" stopColor="#0088FF" stopOpacity={0.6} />
+          <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="rgba(0, 255, 255, 0.8)" stopOpacity={0.9} />
+            <stop offset="50%" stopColor="rgba(0, 128, 255, 0.7)" stopOpacity={0.7} />
+            <stop offset="100%" stopColor="rgba(0, 0, 255, 0.6)" stopOpacity={0.6} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0, 255, 255, 0.1)" />
         <XAxis 
           dataKey="name" 
-          stroke="#00FFFF"
+          stroke="rgba(0, 255, 255, 0.7)"
           opacity={0.7}
         />
         <YAxis 
           unit="%" 
-          stroke="#00FFFF"
+          stroke="rgba(0, 255, 255, 0.7)"
           opacity={0.7}
         />
         <Tooltip
@@ -47,8 +48,9 @@ export function GrowthChart({ data }: GrowthChartProps) {
         />
         <Bar 
           dataKey="growth" 
-          fill="url(#colorGradient)"
+          fill="url(#barGradient)"
           radius={[4, 4, 0, 0]}
+          style={{ filter: 'blur(0.5px)' }}
         />
       </BarChart>
     </ResponsiveContainer>
