@@ -7,7 +7,7 @@ interface MarketShareChartProps {
   }>;
 }
 
-const COLORS = ['#00FFFF', '#4DFFFF', '#80FFFF', '#B3FFFF', '#E6FFFF'];
+const COLORS = ['#00FFFF', '#FF00FF', '#00FF00', '#FFFF00', '#FF3366'];
 
 export function MarketShareChart({ data }: MarketShareChartProps) {
   return (

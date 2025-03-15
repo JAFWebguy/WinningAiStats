@@ -4,6 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { MarketShareChart } from "@/components/MarketShareChart";
 import { GrowthChart } from "@/components/GrowthChart";
 import { StatsCard } from "@/components/StatsCard";
+import { BrainAnimation } from "@/components/BrainAnimation";
 
 const marketShareData = [
   { name: "ChatGPT", share: 59.70, growth: 8, description: "General-purpose AI chatbot", llms: "GPT-3.5, GPT-4" },
@@ -18,6 +19,9 @@ export default function Dashboard() {
     <div className="min-h-screen bg-black">
       {/* Holographic background effect */}
       <div className="fixed inset-0 bg-gradient-to-br from-cyan-900/10 via-blue-900/10 to-purple-900/10 animate-gradient-xy" />
+
+      {/* Brain Animation */}
+      <BrainAnimation />
 
       {/* Star Trek-style grid overlay */}
       <div className="fixed inset-0 bg-[linear-gradient(rgba(0,255,255,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(0,255,255,0.03)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
@@ -44,6 +48,29 @@ export default function Dashboard() {
           >
             AI Chatbot Market Share Dashboard - March 2025
           </motion.p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <StatsCard
+            title="Total Market Leaders"
+            value="5"
+            description="Major players with >1% share"
+          />
+          <StatsCard
+            title="Market Leader"
+            value="ChatGPT"
+            description="59.70% market share"
+          />
+          <StatsCard
+            title="Fastest Growing"
+            value="Claude AI"
+            description="14% quarterly growth"
+          />
+          <StatsCard
+            title="Total Market Share"
+            value="97%"
+            description="Top 5 platforms combined"
+          />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
@@ -76,29 +103,6 @@ export default function Dashboard() {
               <GrowthChart data={marketShareData} />
             </Card>
           </motion.div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatsCard
-            title="Total Market Leaders"
-            value="5"
-            description="Major players with >1% share"
-          />
-          <StatsCard
-            title="Market Leader"
-            value="ChatGPT"
-            description="59.70% market share"
-          />
-          <StatsCard
-            title="Fastest Growing"
-            value="Claude AI"
-            description="14% quarterly growth"
-          />
-          <StatsCard
-            title="Total Market Share"
-            value="97%"
-            description="Top 5 platforms combined"
-          />
         </div>
 
         <motion.div
