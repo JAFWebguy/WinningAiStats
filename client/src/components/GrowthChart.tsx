@@ -7,6 +7,7 @@ interface GrowthChartProps {
   }>;
 }
 
+// Keep colors consistent with pie chart
 const COLORS = [
   'rgba(0, 255, 255, 0.8)',   // Cyan - ChatGPT
   'rgba(255, 0, 255, 0.7)',   // Magenta - Microsoft Copilot
@@ -57,17 +58,12 @@ export function GrowthChart({ data }: GrowthChartProps) {
           }}
           formatter={(value: number) => [`${value}%`, 'Quarterly Growth']}
         />
-        {data.map((_, index) => (
-          <Bar 
-            key={`bar-${index}`}
-            dataKey="growth"
-            fill={`url(#barGradient-${index})`}
-            radius={[4, 4, 0, 0]}
-            style={{ filter: 'blur(0.5px)' }}
-            stackId="stack"
-            data={[data[index]]}
-          />
-        ))}
+        <Bar 
+          dataKey="growth"
+          fill={(data, index) => `url(#barGradient-${index})`}
+          radius={[4, 4, 0, 0]}
+          style={{ filter: 'blur(0.5px)' }}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
