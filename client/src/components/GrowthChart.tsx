@@ -19,13 +19,35 @@ export function GrowthChart({ data }: GrowthChartProps) {
           bottom: 5,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis unit="%" />
+        <defs>
+          <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#06B6D4" />
+            <stop offset="100%" stopColor="#3B82F6" />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(255, 255, 255, 0.1)" />
+        <XAxis 
+          dataKey="name" 
+          stroke="#94A3B8"
+        />
+        <YAxis 
+          unit="%" 
+          stroke="#94A3B8"
+        />
         <Tooltip
+          contentStyle={{ 
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            border: '1px solid rgba(6, 182, 212, 0.2)',
+            borderRadius: '8px',
+            boxShadow: '0 0 15px rgba(6, 182, 212, 0.15)'
+          }}
           formatter={(value: number) => [`${value}%`, 'Quarterly Growth']}
         />
-        <Bar dataKey="growth" fill="#635BFF" radius={[4, 4, 0, 0]} />
+        <Bar 
+          dataKey="growth" 
+          fill="url(#colorGradient)"
+          radius={[4, 4, 0, 0]}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
