@@ -11,7 +11,9 @@ const marketShareData = [
   { name: "Microsoft Copilot", share: 14.40, growth: 6, description: "General-purpose AI assistant", llms: "GPT-4" },
   { name: "Google Gemini", share: 13.50, growth: 5, description: "General-purpose AI assistant", llms: "Gemini" },
   { name: "Perplexity", share: 6.20, growth: 10, description: "Accuracy-focused AI search engine", llms: "Mistral 7B, Llama 2" },
-  { name: "Claude AI", share: 3.20, growth: 14, description: "Business-focused AI assistant", llms: "Claude 3" }
+  { name: "Claude AI", share: 3.20, growth: 14, description: "Business-focused AI assistant", llms: "Claude 3" },
+  { name: "Grok", share: 0.80, growth: 12, description: "General-purpose AI search engine", llms: "Grok 2, Grok 3" },
+  { name: "Deepseek", share: 0.70, growth: 10, description: "General-purpose AI search engine", llms: "DeepSeek V3" }
 ];
 
 export default function Dashboard() {
@@ -53,8 +55,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <StatsCard
             title="Total Market Leaders"
-            value="5"
-            description="Major players with >1% share"
+            value="7"
+            description="Major players tracked"
           />
           <StatsCard
             title="Market Leader"
@@ -68,8 +70,8 @@ export default function Dashboard() {
           />
           <StatsCard
             title="Total Market Share"
-            value="97%"
-            description="Top 5 platforms combined"
+            value="98.5%"
+            description="All tracked platforms"
           />
         </div>
 
