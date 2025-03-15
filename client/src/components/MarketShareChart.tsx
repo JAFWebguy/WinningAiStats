@@ -33,18 +33,23 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           label={({ name, percent, cx, cy, midAngle, innerRadius, outerRadius, index }) => {
             const RADIAN = Math.PI / 180;
             const radius = outerRadius * 1.2 + 10; 
-            let x = cx + radius * Math.cos(-midAngle * RADIAN);
-            let y = cy + radius * Math.sin(-midAngle * RADIAN);
-            const isRightSide = x > cx;
-            if (percent < 0.05) {
-              y += index * 15; 
-            }
+
+            // Calculate optimal label position based on angle
+            const angle = -midAngle * RADIAN;
+            const labelRadius = radius + (index % 2 === 0 ? 20 : 40); // Alternate label distances
+            const x = cx + labelRadius * Math.cos(angle);
+            const y = cy + labelRadius * Math.sin(angle);
+
+            // Adjust position for very small segments
+            const adjustedX = x + (percent < 0.05 ? (x > cx ? 20 : -20) : 0);
+            const adjustedY = y + (percent < 0.05 ? (y > cy ? 10 : -10) : 0);
+
             return (
               <text
-                x={x}
-                y={y}
+                x={adjustedX}
+                y={adjustedY}
                 fill="#00FFFF"
-                textAnchor={isRightSide ? 'start' : 'end'}
+                textAnchor={x > cx ? 'start' : 'end'}
                 dominantBaseline="central"
                 opacity={0.8}
                 fontSize={12}
@@ -58,7 +63,7 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           dataKey="share"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} fillOpacity={0.8} />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
         <Tooltip
