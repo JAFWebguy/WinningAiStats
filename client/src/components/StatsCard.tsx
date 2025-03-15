@@ -13,11 +13,13 @@ export function StatsCard({ title, value, description }: StatsCardProps) {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300 }}
     >
-      <Card>
+      <Card className="overflow-hidden bg-gradient-to-br from-background to-background/95">
         <CardContent className="p-6">
-          <h3 className="text-sm font-medium text-muted-foreground">{title}</h3>
-          <p className="text-2xl font-bold mt-2">{value}</p>
-          <p className="text-sm text-muted-foreground mt-1">{description}</p>
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">{title}</p>
+            <h3 className="text-2xl font-bold tracking-tight">{value}</h3>
+            <p className="text-sm text-muted-foreground">{description}</p>
+          </div>
         </CardContent>
       </Card>
     </motion.div>
