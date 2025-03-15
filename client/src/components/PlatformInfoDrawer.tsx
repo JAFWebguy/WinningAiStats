@@ -118,6 +118,37 @@ export function PlatformInfoDrawer({ platform, children }: PlatformInfoDrawerPro
             </div>
           </>
         );
+      case "Google Gemini":
+        return (
+          <>
+            <div className="space-y-6">
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Latest Models</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Gemini 2.0 Flash</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Key Features</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Operates at twice the speed of Gemini 1.5 Pro</li>
+                  <li>Substantial improvements in speed, reasoning, and multimodal processing</li>
+                  <li>Proprietary model with potential security concerns for sensitive data</li>
+                  <li>Alternative open-source option: Gemma 2 (2B, 9B, 27B parameter models)</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Best For</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>General AI applications requiring speed and reasoning</li>
+                  <li>Organizations without sensitive data concerns</li>
+                </ul>
+              </section>
+            </div>
+          </>
+        );
       default:
         return (
           <div className="mt-6 text-cyan-400/70">
