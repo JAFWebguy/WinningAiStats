@@ -49,6 +49,41 @@ export function PlatformInfoDrawer({ platform, children }: PlatformInfoDrawerPro
             </div>
           </>
         );
+      case "Grok":
+        return (
+          <>
+            <div className="space-y-6">
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Latest Models</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Grok 3 (February 2025)</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Key Features</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Trained using ten times more computing power than Grok 2</li>
+                  <li>Utilizes xAI's Colossus supercomputer</li>
+                  <li>Advanced reasoning capabilities to break down complex problems</li>
+                  <li>Features "Think" and "Big Brain" modes for enhanced problem-solving</li>
+                  <li>New "DeepSearch" function that scans the internet and X for detailed summaries</li>
+                  <li>Integrated with X (formerly Twitter)</li>
+                  <li>Conversational experience with wit and humor</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Best For</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Real-time information access</li>
+                  <li>Companies requiring fast news analysis, coding assistance, and dynamic customer support</li>
+                  <li>Research-focused entities monitoring trends and analyzing emerging issues</li>
+                </ul>
+              </section>
+            </div>
+          </>
+        );
       default:
         return (
           <div className="mt-6 text-cyan-400/70">
