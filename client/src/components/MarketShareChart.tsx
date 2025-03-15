@@ -48,7 +48,7 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
               <text
                 x={adjustedX}
                 y={adjustedY}
-                fill="#00FFFF"
+                fill={COLORS[index % COLORS.length]}
                 textAnchor={x > cx ? 'start' : 'end'}
                 dominantBaseline="central"
                 opacity={0.8}
