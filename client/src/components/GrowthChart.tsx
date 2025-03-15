@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 interface GrowthChartProps {
   data: Array<{
@@ -30,14 +30,6 @@ export function GrowthChart({ data }: GrowthChartProps) {
           bottom: 5,
         }}
       >
-        <defs>
-          {COLORS.map((color, index) => (
-            <linearGradient key={`barGradient-${index}`} id={`barGradient-${index}`} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={color} stopOpacity={0.9} />
-              <stop offset="100%" stopColor={color} stopOpacity={0.6} />
-            </linearGradient>
-          ))}
-        </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(0, 255, 255, 0.1)" />
         <XAxis 
           dataKey="name" 
@@ -60,10 +52,13 @@ export function GrowthChart({ data }: GrowthChartProps) {
         />
         <Bar 
           dataKey="growth"
-          fill={(data, index) => `url(#barGradient-${index})`}
           radius={[4, 4, 0, 0]}
           style={{ filter: 'blur(0.5px)' }}
-        />
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );
