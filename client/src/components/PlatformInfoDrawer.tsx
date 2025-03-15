@@ -84,6 +84,40 @@ export function PlatformInfoDrawer({ platform, children }: PlatformInfoDrawerPro
             </div>
           </>
         );
+      case "Claude AI":
+        return (
+          <>
+            <div className="space-y-6">
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Latest Models</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Claude 3.7 Sonnet</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Key Features</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Integrates multiple reasoning approaches</li>
+                  <li>"Extended thinking mode" using deliberate reasoning or self-reflection loops</li>
+                  <li>Iteratively refines thought process and evaluates multiple reasoning paths</li>
+                  <li>Strong improvements in coding and front-end web development</li>
+                  <li>Enhanced reasoning abilities through "extended thinking mode"</li>
+                  <li>Capabilities in summarization, content generation, and conversational AI</li>
+                </ul>
+              </section>
+
+              <section>
+                <h3 className="text-lg font-semibold text-cyan-400 mb-3">Best For</h3>
+                <ul className="list-disc pl-5 space-y-2 text-cyan-400/70">
+                  <li>Organizations requiring reliable AI in customer support</li>
+                  <li>Knowledge management and business automation</li>
+                  <li>Software engineering tasks</li>
+                </ul>
+              </section>
+            </div>
+          </>
+        );
       default:
         return (
           <div className="mt-6 text-cyan-400/70">
