@@ -1,4 +1,4 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 interface MarketShareChartProps {
   data: Array<{
@@ -47,16 +47,6 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
             />
           ))}
         </Pie>
-        <Tooltip
-          contentStyle={{ 
-            backgroundColor: 'rgba(0, 20, 40, 0.8)',
-            border: '1px solid rgba(0, 255, 255, 0.2)',
-            borderRadius: '8px',
-            boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)',
-            color: 'rgba(0, 255, 255, 0.9)'
-          }}
-          formatter={(value: number) => [`${value.toFixed(2)}%`, 'Market Share']}
-        />
         <Legend 
           verticalAlign="bottom"
           align="center"
