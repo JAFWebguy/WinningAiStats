@@ -18,6 +18,14 @@
     animation: gradient-xy 15s ease infinite;
   }
 
+  .animate-pulse-border {
+    animation: pulse-border 2s ease-in-out infinite;
+  }
+
+  .animate-cyber-grid {
+    animation: cyber-grid 20s linear infinite;
+  }
+
   @keyframes gradient-xy {
     0% {
       background-position: 0% 0%;
@@ -27,6 +35,27 @@
     }
     100% {
       background-position: 0% 0%;
+    }
+  }
+
+  @keyframes pulse-border {
+    0% {
+      box-shadow: 0 0 15px rgba(168,85,247,0.15);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(168,85,247,0.3);
+    }
+    100% {
+      box-shadow: 0 0 15px rgba(168,85,247,0.15);
+    }
+  }
+
+  @keyframes cyber-grid {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 50px 50px;
     }
   }
 }

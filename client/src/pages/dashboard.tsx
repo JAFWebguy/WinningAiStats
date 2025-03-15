@@ -19,7 +19,10 @@ export default function Dashboard() {
       {/* Animated background gradient */}
       <div className="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-cyan-900/20 animate-gradient-xy" />
 
-      <nav className="relative border-b border-white/10 bg-black/50 backdrop-blur-xl z-10">
+      {/* Cyber grid overlay */}
+      <div className="fixed inset-0 bg-[linear-gradient(transparent_1px,_#000_1px),_linear-gradient(90deg,_transparent_1px,_#000_1px)] bg-[size:30px_30px] [background-position:center] opacity-20 animate-cyber-grid" />
+
+      <nav className="relative border-b border-purple-500/20 bg-black/50 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
           <motion.h1 
             initial={{ opacity: 0, x: -20 }}
@@ -51,7 +54,7 @@ export default function Dashboard() {
             whileHover={{ scale: 1.02 }}
             className="transform transition-all duration-300"
           >
-            <Card className="p-6 h-full bg-black/50 backdrop-blur-xl border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.15)] overflow-hidden">
+            <Card className="p-6 h-full bg-black/50 backdrop-blur-xl border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.15)] animate-pulse-border overflow-hidden">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
                 Market Share Distribution
               </h2>
@@ -66,7 +69,7 @@ export default function Dashboard() {
             whileHover={{ scale: 1.02 }}
             className="transform transition-all duration-300"
           >
-            <Card className="p-6 h-full bg-black/50 backdrop-blur-xl border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] overflow-hidden">
+            <Card className="p-6 h-full bg-black/50 backdrop-blur-xl border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.15)] animate-pulse-border overflow-hidden">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">
                 Quarterly Growth Rates
               </h2>
@@ -105,7 +108,7 @@ export default function Dashboard() {
           whileHover={{ scale: 1.01 }}
           className="transform transition-all duration-300"
         >
-          <Card className="p-6 bg-black/50 backdrop-blur-xl border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.15)]">
+          <Card className="p-6 bg-black/50 backdrop-blur-xl border border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.15)] animate-pulse-border">
             <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
               Detailed Breakdown
             </h2>

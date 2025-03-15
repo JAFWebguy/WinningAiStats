@@ -13,7 +13,7 @@ export function StatsCard({ title, value, description }: StatsCardProps) {
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 400 }}
     >
-      <Card className="overflow-hidden bg-black/50 backdrop-blur-xl border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+      <Card className="overflow-hidden bg-black/50 backdrop-blur-xl border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.15)] animate-pulse-border">
         <CardContent className="p-6">
           <div className="space-y-2">
             <p className="text-sm font-medium text-purple-400">{title}</p>
