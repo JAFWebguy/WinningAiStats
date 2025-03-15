@@ -7,7 +7,7 @@ interface MarketShareChartProps {
   }>;
 }
 
-const COLORS = ['#A855F7', '#EC4899', '#3B82F6', '#06B6D4', '#8B5CF6'];
+const COLORS = ['#00FFFF', '#4DFFFF', '#80FFFF', '#B3FFFF', '#E6FFFF'];
 
 export function MarketShareChart({ data }: MarketShareChartProps) {
   return (
@@ -24,16 +24,16 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           dataKey="share"
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} fillOpacity={0.8} />
           ))}
         </Pie>
         <Tooltip
           formatter={(value: number) => [`${value.toFixed(2)}%`, 'Market Share']}
           contentStyle={{ 
             backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            border: '1px solid rgba(168, 85, 247, 0.2)',
+            border: '1px solid rgba(0, 255, 255, 0.2)',
             borderRadius: '8px',
-            boxShadow: '0 0 15px rgba(168, 85, 247, 0.15)'
+            boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)'
           }}
         />
         <Legend />
