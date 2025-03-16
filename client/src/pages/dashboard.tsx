@@ -6,18 +6,16 @@ import { GrowthChart } from "@/components/GrowthChart";
 import { StatsCard } from "@/components/StatsCard";
 import { BrainAnimation } from "@/components/BrainAnimation";
 import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
-
-const marketShareData = [
-  { name: "ChatGPT", share: 59.70, growth: 8, description: "General-purpose AI chatbot", llms: "GPT-3.5, GPT-4" },
-  { name: "Microsoft Copilot", share: 14.40, growth: 6, description: "General-purpose AI assistant", llms: "GPT-4" },
-  { name: "Google Gemini", share: 13.50, growth: 5, description: "General-purpose AI assistant", llms: "Gemini" },
-  { name: "Perplexity", share: 6.20, growth: 10, description: "Accuracy-focused AI search engine", llms: "Mistral 7B, Llama 2" },
-  { name: "Claude AI", share: 3.20, growth: 14, description: "Business-focused AI assistant", llms: "Claude 3" },
-  { name: "Grok", share: 0.80, growth: 12, description: "General-purpose AI search engine", llms: "Grok 2, Grok 3" },
-  { name: "Deepseek", share: 0.70, growth: 10, description: "General-purpose AI search engine", llms: "DeepSeek V3" }
-];
+import { useWebSocket } from "@/hooks/useWebSocket";
+import { marketShareData as initialData } from "@shared/data";
 
 export default function Dashboard() {
+  const { data: marketShareData, error } = useWebSocket(initialData);
+
+  if (error) {
+    console.error('WebSocket error:', error);
+  }
+
   return (
     <div className="min-h-screen bg-black">
       {/* Holographic background effect */}
@@ -61,17 +59,17 @@ export default function Dashboard() {
           />
           <StatsCard
             title="Market Leader"
-            value="ChatGPT"
-            description="59.70% market share"
+            value={marketShareData && marketShareData.find(item => item.share === Math.max(...marketShareData.map(item => item.share)))?.name || "ChatGPT"}
+            description={`${marketShareData && marketShareData.find(item => item.share === Math.max(...marketShareData.map(item => item.share)))?.share || 59.70}% market share`}
           />
           <StatsCard
             title="Fastest Growing"
-            value="Claude AI"
-            description="14% quarterly growth"
+            value={marketShareData && marketShareData.find(item => item.growth === Math.max(...marketShareData.map(item => item.growth)))?.name || "Claude AI"}
+            description={`${marketShareData && marketShareData.find(item => item.growth === Math.max(...marketShareData.map(item => item.growth)))?.growth || 14}% quarterly growth`}
           />
           <StatsCard
             title="Total Market Share"
-            value="98.5%"
+            value={`${marketShareData ? marketShareData.reduce((sum, item) => sum + item.share, 0) : 98.5}%`}
             description="All tracked platforms"
           />
         </div>
@@ -88,7 +86,7 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
                 Market Share Distribution
               </h2>
-              <MarketShareChart data={marketShareData} />
+              <MarketShareChart data={marketShareData || initialData} />
             </Card>
           </motion.div>
 
@@ -103,7 +101,7 @@ export default function Dashboard() {
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
                 Quarterly Growth Rates
               </h2>
-              <GrowthChart data={marketShareData} />
+              <GrowthChart data={marketShareData || initialData} />
             </Card>
           </motion.div>
         </div>
@@ -131,11 +129,11 @@ export default function Dashboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {marketShareData.map((item, index) => (
+                  {(marketShareData || initialData).map((item, index) => (
                     <tr
                       key={item.name}
                       className={`border-b border-cyan-500/20 hover:bg-cyan-500/5 transition-colors ${
-                        index === marketShareData.length - 1 ? 'border-b-0' : ''
+                        index === (marketShareData || initialData).length - 1 ? 'border-b-0' : ''
                       }`}
                     >
                       <td className="py-4 px-4">
