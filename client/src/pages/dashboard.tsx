@@ -8,11 +8,9 @@ import { BrainAnimation } from "@/components/BrainAnimation";
 import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { marketShareData as initialData } from "@shared/data";
-import { TrendChart } from "@/components/TrendChart"; // Import the TrendChart component
-
 
 export default function Dashboard() {
-  const { currentData: marketShareData, historicalData, error } = useWebSocket(initialData);
+  const { data: marketShareData, error } = useWebSocket(initialData);
 
   if (error) {
     console.error('WebSocket error:', error);
@@ -107,21 +105,6 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          whileHover={{ scale: 1.01 }}
-          className="transform transition-all duration-300 animate-hologram mb-8"
-        >
-          <Card className="p-6 glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
-            <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
-              Historical Trends
-            </h2>
-            {historicalData && historicalData.length > 0 && <TrendChart data={historicalData} />}
-          </Card>
-        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
