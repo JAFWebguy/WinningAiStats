@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react';
+import type { MarketShareDataPoint, HistoricalDataPoint } from '@shared/data';
 
-export function useWebSocket<T>(initialData: T) {
-  const [data, setData] = useState<T>(initialData);
+interface WebSocketData {
+  current: MarketShareDataPoint[];
+  historical: HistoricalDataPoint[];
+}
+
+export function useWebSocket(initialData: MarketShareDataPoint[]) {
+  const [currentData, setCurrentData] = useState<MarketShareDataPoint[]>(initialData);
+  const [historicalData, setHistoricalData] = useState<HistoricalDataPoint[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -11,8 +18,9 @@ export function useWebSocket<T>(initialData: T) {
 
     socket.onmessage = (event) => {
       try {
-        const parsedData = JSON.parse(event.data);
-        setData(parsedData);
+        const parsedData: WebSocketData = JSON.parse(event.data);
+        setCurrentData(parsedData.current);
+        setHistoricalData(parsedData.historical);
       } catch (err) {
         setError('Failed to parse WebSocket data');
       }
@@ -27,5 +35,5 @@ export function useWebSocket<T>(initialData: T) {
     };
   }, []);
 
-  return { data, error };
+  return { currentData, historicalData, error };
 }
