@@ -17,22 +17,22 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-background">
       {/* Holographic background effect */}
-      <div className="fixed inset-0 bg-gradient-to-br from-cyan-900/10 via-blue-900/10 to-purple-900/10 animate-gradient-xy" />
+      <div className="fixed inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 animate-gradient-xy" />
 
       {/* Brain Animation */}
       <BrainAnimation />
 
       {/* Star Trek-style grid overlay */}
-      <div className="fixed inset-0 bg-[linear-gradient(rgba(0,255,255,0.03)_1px,_transparent_1px),_linear-gradient(90deg,_rgba(0,255,255,0.03)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
+      <div className="fixed inset-0 bg-[linear-gradient(var(--primary)_1px,_transparent_1px),_linear-gradient(90deg,_var(--primary)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
 
-      <nav className="relative border-b border-cyan-500/20 bg-black/30 backdrop-blur-xl z-10">
+      <nav className="relative border-b border-primary/20 bg-background/30 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text flex-1"
+            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text flex-1"
           >
             Who's Winning the LLM Race?
           </motion.h1>
@@ -83,7 +83,7 @@ export default function Dashboard() {
             className="transform transition-all duration-300 animate-hologram"
           >
             <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
                 Market Share Distribution
               </h2>
               <MarketShareChart data={marketShareData || initialData} />
@@ -98,7 +98,7 @@ export default function Dashboard() {
             className="transform transition-all duration-300 animate-hologram"
           >
             <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
                 Quarterly Growth Rates
               </h2>
               <GrowthChart data={marketShareData || initialData} />
@@ -114,13 +114,13 @@ export default function Dashboard() {
           className="transform transition-all duration-300 animate-hologram"
         >
           <Card className="p-6 glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
-            <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 holographic-text">
+            <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
               Detailed Breakdown
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-cyan-500/20">
+                  <tr className="border-b border-primary/20">
                     <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Platform</th>
                     <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Market Share</th>
                     <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Growth</th>
@@ -132,7 +132,7 @@ export default function Dashboard() {
                   {(marketShareData || initialData).map((item, index) => (
                     <tr
                       key={item.name}
-                      className={`border-b border-cyan-500/20 hover:bg-cyan-500/5 transition-colors ${
+                      className={`border-b border-primary/20 hover:bg-cyan-500/5 transition-colors ${
                         index === (marketShareData || initialData).length - 1 ? 'border-b-0' : ''
                       }`}
                     >
