@@ -60,16 +60,16 @@ export default function Dashboard() {
           <StatsCard
             title="Market Leader"
             value={marketShareData && marketShareData.find(item => item.share === Math.max(...marketShareData.map(item => item.share)))?.name || "ChatGPT"}
-            description={`${marketShareData && marketShareData.find(item => item.share === Math.max(...marketShareData.map(item => item.share)))?.share || 59.70}% market share`}
+            description={`${(marketShareData && marketShareData.find(item => item.share === Math.max(...marketShareData.map(item => item.share)))?.share || 59.70).toFixed(3)}% market share`}
           />
           <StatsCard
             title="Fastest Growing"
             value={marketShareData && marketShareData.find(item => item.growth === Math.max(...marketShareData.map(item => item.growth)))?.name || "Claude AI"}
-            description={`${marketShareData && marketShareData.find(item => item.growth === Math.max(...marketShareData.map(item => item.growth)))?.growth || 14}% quarterly growth`}
+            description={`${(marketShareData && marketShareData.find(item => item.growth === Math.max(...marketShareData.map(item => item.growth)))?.growth || 14).toFixed(3)}% quarterly growth`}
           />
           <StatsCard
             title="Total Market Share"
-            value={`${marketShareData ? marketShareData.reduce((sum, item) => sum + item.share, 0) : 98.5}%`}
+            value={`${(marketShareData ? marketShareData.reduce((sum, item) => sum + item.share, 0) : 98.5).toFixed(3)}%`}
             description="All tracked platforms"
           />
         </div>
