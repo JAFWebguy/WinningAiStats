@@ -8,6 +8,7 @@ import { BrainAnimation } from "@/components/BrainAnimation";
 import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { marketShareData as initialData } from "@shared/data";
+import { AdsenseInFeed } from "@/components/AdsenseInFeed";
 
 export default function Dashboard() {
   const { data: marketShareData, error } = useWebSocket(initialData);
@@ -105,6 +106,16 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         </div>
+
+        {/* Ad Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25 }}
+          className="mb-8"
+        >
+          <AdsenseInFeed />
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
