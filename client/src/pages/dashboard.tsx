@@ -27,12 +27,12 @@ export default function Dashboard() {
       {/* Star Trek-style grid overlay */}
       <div className="fixed inset-0 bg-[linear-gradient(var(--primary)_1px,_transparent_1px),_linear-gradient(90deg,_var(--primary)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
 
-      <nav className="relative border-b border-primary/20 bg-background/30 backdrop-blur-xl z-10">
+      <nav className="relative border-b border-slate-200 dark:border-primary/20 bg-background/30 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
           <motion.h1
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text flex-1"
+            className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent holographic-text flex-1"
           >
             Who's Winning the LLM Race?
           </motion.h1>
@@ -45,7 +45,7 @@ export default function Dashboard() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-cyan-400 text-lg holographic-text"
+            className="text-slate-700 dark:text-cyan-400 text-lg"
           >
             AI Chatbot Market Share Dashboard - March 2025
           </motion.p>
@@ -82,8 +82,8 @@ export default function Dashboard() {
             whileHover={{ scale: 1.02 }}
             className="transform transition-all duration-300 animate-hologram"
           >
-            <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
+            <Card className="p-6 h-full glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
                 Market Share Distribution
               </h2>
               <MarketShareChart data={marketShareData || initialData} />
@@ -97,8 +97,8 @@ export default function Dashboard() {
             whileHover={{ scale: 1.02 }}
             className="transform transition-all duration-300 animate-hologram"
           >
-            <Card className="p-6 h-full glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
+            <Card className="p-6 h-full glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border overflow-hidden">
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
                 Quarterly Growth Rates
               </h2>
               <GrowthChart data={marketShareData || initialData} />
@@ -113,38 +113,38 @@ export default function Dashboard() {
           whileHover={{ scale: 1.01 }}
           className="transform transition-all duration-300 animate-hologram"
         >
-          <Card className="p-6 glass-effect border border-cyan-500/20 shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
-            <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent holographic-text">
+          <Card className="p-6 glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
+            <h2 className="text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
               Detailed Breakdown
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-primary/20">
-                    <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Platform</th>
-                    <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Market Share</th>
-                    <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Growth</th>
-                    <th className="text-left py-4 px-4 text-cyan-400 holographic-text">Description</th>
-                    <th className="text-left py-4 px-4 text-cyan-400 holographic-text">LLMs Used</th>
+                  <tr className="border-b border-slate-200 dark:border-primary/20">
+                    <th className="text-left py-4 px-4 text-slate-700 dark:text-cyan-400">Platform</th>
+                    <th className="text-left py-4 px-4 text-slate-700 dark:text-cyan-400">Market Share</th>
+                    <th className="text-left py-4 px-4 text-slate-700 dark:text-cyan-400">Growth</th>
+                    <th className="text-left py-4 px-4 text-slate-700 dark:text-cyan-400">Description</th>
+                    <th className="text-left py-4 px-4 text-slate-700 dark:text-cyan-400">LLMs Used</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(marketShareData || initialData).map((item, index) => (
                     <tr
                       key={item.name}
-                      className={`border-b border-primary/20 hover:bg-cyan-500/5 transition-colors ${
+                      className={`border-b border-slate-200 dark:border-primary/20 hover:bg-slate-100 dark:hover:bg-cyan-500/5 transition-colors ${
                         index === (marketShareData || initialData).length - 1 ? 'border-b-0' : ''
                       }`}
                     >
                       <td className="py-4 px-4">
                         <PlatformInfoDrawer platform={item.name}>
-                          <button className="hover:text-cyan-400 transition-colors">
+                          <button className="hover:text-slate-900 dark:hover:text-cyan-400 transition-colors">
                             {item.name}
                           </button>
                         </PlatformInfoDrawer>
                       </td>
                       <td className="py-4 px-4">{item.share.toFixed(3)}%</td>
-                      <td className="py-4 px-4 text-cyan-400">{item.growth.toFixed(3)}% ▲</td>
+                      <td className="py-4 px-4 text-slate-700 dark:text-cyan-400">{item.growth.toFixed(3)}% ▲</td>
                       <td className="py-4 px-4">{item.description}</td>
                       <td className="py-4 px-4">{item.llms}</td>
                     </tr>
@@ -152,7 +152,7 @@ export default function Dashboard() {
                 </tbody>
               </table>
             </div>
-            <div className="mt-6 text-sm text-cyan-400/70 italic text-right">
+            <div className="mt-6 text-sm text-slate-500 dark:text-cyan-400/70 italic text-right">
               Source: FirstPageSage, March 6, 2025
             </div>
           </Card>
