@@ -53,7 +53,7 @@ export function GrowthChart({ data }: GrowthChartProps) {
           itemStyle={{
             color: 'rgba(0, 255, 255, 0.9)'
           }}
-          formatter={(value: number) => [`${value}%`, 'Quarterly Growth']}
+          formatter={(value: number) => [`${value.toFixed(3)}%`, 'Quarterly Growth']}
           labelStyle={{
             color: 'rgba(0, 255, 255, 0.9)'
           }}
