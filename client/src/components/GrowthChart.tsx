@@ -43,12 +43,20 @@ export function GrowthChart({ data }: GrowthChartProps) {
         />
         <Tooltip
           contentStyle={{ 
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            backgroundColor: 'rgba(0, 20, 40, 0.9)',
             border: '1px solid rgba(0, 255, 255, 0.2)',
             borderRadius: '8px',
-            boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)'
+            boxShadow: '0 0 15px rgba(0, 255, 255, 0.15)',
+            backdropFilter: 'blur(4px)',
+            color: 'rgba(0, 255, 255, 0.9)'
+          }}
+          itemStyle={{
+            color: 'rgba(0, 255, 255, 0.9)'
           }}
           formatter={(value: number) => [`${value}%`, 'Quarterly Growth']}
+          labelStyle={{
+            color: 'rgba(0, 255, 255, 0.9)'
+          }}
         />
         <Bar 
           dataKey="growth"
