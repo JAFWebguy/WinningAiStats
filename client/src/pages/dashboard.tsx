@@ -143,8 +143,8 @@ export default function Dashboard() {
                           </button>
                         </PlatformInfoDrawer>
                       </td>
-                      <td className="py-4 px-4">{item.share}%</td>
-                      <td className="py-4 px-4 text-cyan-400">{item.growth}% ▲</td>
+                      <td className="py-4 px-4">{item.share.toFixed(3)}%</td>
+                      <td className="py-4 px-4 text-cyan-400">{item.growth.toFixed(3)}% ▲</td>
                       <td className="py-4 px-4">{item.description}</td>
                       <td className="py-4 px-4">{item.llms}</td>
                     </tr>
