@@ -7,14 +7,15 @@ interface MarketShareChartProps {
   }>;
 }
 
+// Keep colors consistent with pie chart
 const COLORS = [
   'rgba(0, 255, 255, 0.8)',   // Cyan
-  'rgba(255, 0, 255, 0.7)',   // Magenta
-  'rgba(0, 255, 0, 0.7)',     // Green
-  'rgba(255, 255, 0, 0.7)',   // Yellow
-  'rgba(255, 51, 102, 0.7)',  // Pink
-  'rgba(51, 153, 255, 0.7)',  // Blue
-  'rgba(255, 128, 0, 0.7)'    // Orange
+  'rgba(255, 0, 255, 0.8)',   // Magenta
+  'rgba(0, 255, 0, 0.8)',     // Green
+  'rgba(255, 255, 0, 0.8)',   // Yellow
+  'rgba(255, 51, 102, 0.8)',  // Pink
+  'rgba(51, 153, 255, 0.8)',  // Blue
+  'rgba(255, 128, 0, 0.8)'    // Orange
 ];
 
 export function MarketShareChart({ data }: MarketShareChartProps) {
@@ -38,6 +39,10 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           outerRadius={150}
           fill="#8884d8"
           dataKey="share"
+          isAnimationActive={true}
+          animationBegin={0}
+          animationDuration={800}
+          animationEasing="ease-out"
         >
           {data.map((entry, index) => (
             <Cell 
