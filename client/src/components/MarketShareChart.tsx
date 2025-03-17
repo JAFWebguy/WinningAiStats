@@ -7,7 +7,6 @@ interface MarketShareChartProps {
   }>;
 }
 
-// Keep colors consistent with pie chart
 const COLORS = [
   'rgba(0, 255, 255, 0.8)',   // Cyan
   'rgba(255, 0, 255, 0.8)',   // Magenta
@@ -39,10 +38,7 @@ export function MarketShareChart({ data }: MarketShareChartProps) {
           outerRadius={150}
           fill="#8884d8"
           dataKey="share"
-          isAnimationActive={true}
-          animationBegin={0}
-          animationDuration={800}
-          animationEasing="ease-out"
+          isAnimationActive={false}
         >
           {data.map((entry, index) => (
             <Cell 
