@@ -33,10 +33,23 @@ export function InsightsGenerator() {
     setError(null);
     try {
       const response = await apiRequest('POST', '/api/generate-insights', { focus });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
       setInsights(data.insights);
+      toast({
+        title: "Insights Generated",
+        description: "New market insights have been generated successfully.",
+      });
     } catch (err) {
-      setError('Failed to generate insights. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(`Failed to generate insights: ${errorMessage}`);
+      toast({
+        title: "Error",
+        description: `Failed to generate insights: ${errorMessage}`,
+        variant: "destructive",
+      });
       console.error('Error:', err);
     } finally {
       setIsLoading(false);
@@ -113,7 +126,7 @@ export function InsightsGenerator() {
             <Button 
               onClick={generateInsights}
               disabled={isLoading}
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white"
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white relative"
             >
               {isLoading ? (
                 <>
@@ -127,8 +140,11 @@ export function InsightsGenerator() {
           </div>
 
           {error && (
-            <div className="text-red-500 dark:text-red-400 text-sm">
-              {error}
+            <div className="text-red-500 dark:text-red-400 text-sm p-2 rounded-md bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+              <p className="flex items-center gap-2">
+                <span>⚠️</span>
+                {error}
+              </p>
             </div>
           )}
 
