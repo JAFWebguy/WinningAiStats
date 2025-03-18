@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Loader2, Sparkles, Copy, Share2, Mail, MessageSquare } from "lucide-react";
-import { SiNotion, SiSlack } from "react-icons/si";
+import { SiNotion, SiSlack, SiWhatsapp } from "react-icons/si";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -75,6 +75,11 @@ export function InsightsGenerator() {
     // Using Notion's sharing URL scheme
     const text = encodeURIComponent(insights);
     window.open(`https://www.notion.so/create-page?title=AI%20Market%20Insights&content=${text}`);
+  };
+
+  const shareToWhatsApp = () => {
+    const text = encodeURIComponent(insights);
+    window.open(`https://wa.me/?text=${text}`);
   };
 
   return (
@@ -160,6 +165,10 @@ export function InsightsGenerator() {
                     <DropdownMenuItem onClick={shareToNotion}>
                       <SiNotion className="mr-2 h-4 w-4" />
                       <span>Notion</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={shareToWhatsApp}>
+                      <SiWhatsapp className="mr-2 h-4 w-4" />
+                      <span>WhatsApp</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
