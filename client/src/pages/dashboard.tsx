@@ -9,6 +9,7 @@ import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { marketShareData as initialData } from "@shared/data";
 import { AdsenseInFeed } from "@/components/AdsenseInFeed";
+import { InsightsGenerator } from "@/components/InsightsGenerator";
 
 export default function Dashboard() {
   const { data: marketShareData, error } = useWebSocket(initialData);
@@ -168,6 +169,9 @@ export default function Dashboard() {
             </div>
           </Card>
         </motion.div>
+        <div className="mt-8">
+          <InsightsGenerator />
+        </div>
       </main>
     </div>
   );
