@@ -39,16 +39,18 @@ export function InsightsGenerator() {
       const data = await response.json();
       setInsights(data.insights);
       toast({
-        title: "Insights Generated",
-        description: "New market insights have been generated successfully.",
+        title: "Success!",
+        description: "Your market insights have been generated and are displayed below.",
+        duration: 5000,
       });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(`Failed to generate insights: ${errorMessage}`);
       toast({
-        title: "Error",
-        description: `Failed to generate insights: ${errorMessage}`,
+        title: "Something went wrong",
+        description: "We couldn't generate the insights. Please try again in a few moments.",
         variant: "destructive",
+        duration: 7000,
       });
       console.error('Error:', err);
     } finally {
@@ -60,14 +62,16 @@ export function InsightsGenerator() {
     try {
       await navigator.clipboard.writeText(insights);
       toast({
-        title: "Copied to clipboard",
-        description: "The insights have been copied to your clipboard.",
+        title: "Copied!",
+        description: "The market insights have been copied and you can now paste them anywhere.",
+        duration: 4000,
       });
     } catch (err) {
       toast({
-        title: "Failed to copy",
-        description: "Please try copying manually.",
+        title: "Couldn't copy",
+        description: "Please try selecting and copying the text manually.",
         variant: "destructive",
+        duration: 5000,
       });
     }
   };
