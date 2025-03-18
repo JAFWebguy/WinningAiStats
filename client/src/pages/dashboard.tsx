@@ -145,30 +145,6 @@ export default function Dashboard() {
           <AdsenseInFeed />
         </motion.div>
 
-        {/* Technical Metrics Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 }}
-          className="mb-8"
-        >
-          {isLoading ? (
-            <Card className="p-6">
-              <div className="space-y-4">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[...Array(3)].map((_, j) => (
-                      <TableRowSkeleton key={j} />
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </Card>
-          ) : (
-            <LLMMetricsGrid data={marketShareData} />
-          )}
-        </motion.div>
-
         {/* Detailed Breakdown Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -232,6 +208,25 @@ export default function Dashboard() {
 
         <div className="mt-8">
           <InsightsGenerator />
+        </div>
+
+        {/* Technical Metrics Section - Moved after InsightsGenerator */}
+        <div className="mt-8">
+          {isLoading ? (
+            <Card className="p-6">
+              <div className="space-y-4">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[...Array(3)].map((_, j) => (
+                      <TableRowSkeleton key={j} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ) : (
+            <LLMMetricsGrid data={marketShareData} />
+          )}
         </div>
       </main>
       <Footer />
