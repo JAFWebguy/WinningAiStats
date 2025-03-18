@@ -27,9 +27,9 @@ export class ErrorBoundary extends React.Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <Card className="p-6 border-red-200 bg-red-50 dark:bg-red-900/20">
-          <h2 className="text-lg font-semibold text-red-800 dark:text-red-200">Something went wrong</h2>
-          <p className="text-sm text-red-600 dark:text-red-300 mt-2">
+        <Card className="p-6 bg-destructive/10 border-destructive/20">
+          <h2 className="text-lg font-semibold text-destructive">Something went wrong</h2>
+          <p className="text-sm text-destructive/80 mt-2">
             {this.state.error?.message || 'An unexpected error occurred'}
           </p>
         </Card>
