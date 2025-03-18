@@ -48,39 +48,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Market Insights Generator endpoint
   app.post('/api/generate-insights', async (req, res) => {
     try {
-      const { focus = 'market trends', selectedBot } = req.body;
+      const { focus = 'market trends' } = req.body;
 
-      let prompt;
-      if (selectedBot) {
-        const botData = marketShareData.find(item => item.name === selectedBot);
-        if (!botData) {
-          throw new Error(`Bot ${selectedBot} not found in market data`);
-        }
-
-        prompt = `Analyze the following AI Chatbot (${selectedBot}) with a focus on ${focus}:
-
-Specific Bot Data:
-- Name: ${botData.name}
-- Market Share: ${botData.share}%
-- Quarterly Growth: ${botData.growth}%
-- Description: ${botData.description}
-- LLMs Used: ${botData.llms}
-
-Market Context:
-${marketShareData
-  .filter(item => item.name !== selectedBot)
-  .map(item => `- ${item.name}: ${item.share}% market share, ${item.growth}% quarterly growth`)
-  .join('\n')}
-
-Please provide 3-4 key insights about ${selectedBot} regarding ${focus}, considering:
-1. Its current market position
-2. Growth trajectory
-3. Competitive advantages/challenges
-4. Future potential
-
-Format the response in clear, concise bullet points.`;
-      } else {
-        prompt = `Analyze the following AI Chatbot market share data and provide insights about ${focus}:
+      const prompt = `Analyze the following AI Chatbot market share data and provide insights about ${focus}:
 
 Market Share Data:
 ${marketShareData.map(item => 
@@ -96,7 +66,6 @@ Please provide 3-4 key insights about ${focus}, focusing on:
 4. Future predictions
 
 Format the response in clear, concise bullet points.`;
-      }
 
       const completion = await openai.chat.completions.create({
         messages: [{ role: "user", content: prompt }],

@@ -12,7 +12,6 @@ import { AdsenseInFeed } from "@/components/AdsenseInFeed";
 import { InsightsGenerator } from "@/components/InsightsGenerator";
 import { Footer } from "@/components/Footer";
 import { StatsSkeleton, ChartSkeleton, TableRowSkeleton } from "@/components/ui/skeleton";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function Dashboard() {
   const { data: marketShareData, error, isReconnecting } = useWebSocket(initialData);
@@ -24,9 +23,12 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Background effects remain unchanged */}
       <div className="fixed inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 animate-gradient-xy" />
       <BrainAnimation />
       <div className="fixed inset-0 bg-[linear-gradient(var(--primary)_1px,_transparent_1px),_linear-gradient(90deg,_var(--primary)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
+
+      {/* Navigation remains unchanged */}
       <nav className="relative border-b border-slate-200 dark:border-primary/20 bg-background/30 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
           <motion.h1
@@ -39,6 +41,7 @@ export default function Dashboard() {
           <ThemeToggle />
         </div>
       </nav>
+
       <main className="container relative mx-auto px-4 py-8 z-10">
         <div className="mb-8">
           <motion.p
@@ -49,6 +52,8 @@ export default function Dashboard() {
             AI Chatbot Market Share Dashboard - March 2025
           </motion.p>
         </div>
+
+        {/* Stats Cards Section */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {isLoading ? (
             <>
@@ -83,6 +88,8 @@ export default function Dashboard() {
             </>
           )}
         </div>
+
+        {/* Charts Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -104,6 +111,7 @@ export default function Dashboard() {
               )}
             </Card>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -125,6 +133,8 @@ export default function Dashboard() {
             </Card>
           </motion.div>
         </div>
+
+        {/* Ad Section remains unchanged */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -133,6 +143,8 @@ export default function Dashboard() {
         >
           <AdsenseInFeed />
         </motion.div>
+
+        {/* Detailed Breakdown Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -192,10 +204,9 @@ export default function Dashboard() {
             </div>
           </Card>
         </motion.div>
+
         <div className="mt-8">
-          <ErrorBoundary>
-            <InsightsGenerator />
-          </ErrorBoundary>
+          <InsightsGenerator />
         </div>
       </main>
       <Footer />
