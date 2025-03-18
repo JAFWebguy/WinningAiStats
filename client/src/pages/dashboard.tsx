@@ -12,6 +12,7 @@ import { AdsenseInFeed } from "@/components/AdsenseInFeed";
 import { InsightsGenerator } from "@/components/InsightsGenerator";
 import { Footer } from "@/components/Footer";
 import { StatsSkeleton, ChartSkeleton, TableRowSkeleton } from "@/components/ui/skeleton";
+import { LLMMetricsGrid } from "@/components/LLMMetricsGrid";
 
 export default function Dashboard() {
   const { data: marketShareData, error, isReconnecting } = useWebSocket(initialData);
@@ -23,12 +24,12 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Background effects remain unchanged */}
+      {/* Background effects */}
       <div className="fixed inset-0 bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 animate-gradient-xy" />
       <BrainAnimation />
       <div className="fixed inset-0 bg-[linear-gradient(var(--primary)_1px,_transparent_1px),_linear-gradient(90deg,_var(--primary)_1px,_transparent_1px)] bg-[size:20px_20px] [background-position:center] opacity-30 animate-cyber-grid" />
 
-      {/* Navigation remains unchanged */}
+      {/* Navigation */}
       <nav className="relative border-b border-slate-200 dark:border-primary/20 bg-background/30 backdrop-blur-xl z-10">
         <div className="container flex h-16 items-center px-4">
           <motion.h1
@@ -134,7 +135,7 @@ export default function Dashboard() {
           </motion.div>
         </div>
 
-        {/* Ad Section remains unchanged */}
+        {/* Ad Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -142,6 +143,30 @@ export default function Dashboard() {
           className="mb-8"
         >
           <AdsenseInFeed />
+        </motion.div>
+
+        {/* Technical Metrics Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mb-8"
+        >
+          {isLoading ? (
+            <Card className="p-6">
+              <div className="space-y-4">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {[...Array(3)].map((_, j) => (
+                      <TableRowSkeleton key={j} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ) : (
+            <LLMMetricsGrid data={marketShareData} />
+          )}
         </motion.div>
 
         {/* Detailed Breakdown Section */}
