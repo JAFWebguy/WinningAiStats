@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +19,7 @@ import { SiNotion, SiSlack, SiWhatsapp } from "react-icons/si";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { marketShareData } from "@shared/data";
 
 const FOCUS_OPTIONS = [
   { value: "market trends", label: "Market Trends" },
@@ -21,22 +28,49 @@ const FOCUS_OPTIONS = [
   { value: "future predictions", label: "Future Predictions" }
 ];
 
+// Create chatbot options from market share data
+const CHATBOT_OPTIONS = marketShareData.map(bot => ({
+  value: bot.name,
+  label: bot.name
+}));
+
 export function InsightsGenerator() {
   const [insights, setInsights] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const [focus, setFocus] = useState("market trends");
+  const [selectedBot, setSelectedBot] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Add debug logging
+  useEffect(() => {
+    console.log('InsightsGenerator mounted');
+    console.log('Initial state:', { focus, selectedBot });
+
+    return () => {
+      console.log('InsightsGenerator unmounted');
+    };
+  }, []);
+
   const generateInsights = async () => {
+    console.log('Generating insights with:', { focus, selectedBot });
     setIsLoading(true);
     setError(null);
     try {
-      const response = await apiRequest('POST', '/api/generate-insights', { focus });
+      const response = await apiRequest('POST', '/api/generate-insights', { 
+        focus,
+        selectedBot: selectedBot || undefined
+      });
+
+      console.log('API Response status:', response.status);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
+
       const data = await response.json();
+      console.log('Received insights data:', data);
+
       setInsights(data.insights);
       toast({
         title: "Success!",
@@ -44,6 +78,7 @@ export function InsightsGenerator() {
         duration: 5000,
       });
     } catch (err) {
+      console.error('Error in generateInsights:', err);
       const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
       setError(`Failed to generate insights: ${errorMessage}`);
       toast({
@@ -52,7 +87,6 @@ export function InsightsGenerator() {
         variant: "destructive",
         duration: 7000,
       });
-      console.error('Error:', err);
     } finally {
       setIsLoading(false);
     }
@@ -83,13 +117,11 @@ export function InsightsGenerator() {
   };
 
   const shareToSlack = () => {
-    // Using Slack's Web API to share content
     const text = encodeURIComponent(insights);
     window.open(`https://slack.com/share?text=${text}`);
   };
 
   const shareToNotion = () => {
-    // Using Notion's sharing URL scheme
     const text = encodeURIComponent(insights);
     window.open(`https://www.notion.so/create-page?title=AI%20Market%20Insights&content=${text}`);
   };
@@ -113,16 +145,32 @@ export function InsightsGenerator() {
             AI Market Insights Generator
           </h2>
 
-          <div className="flex items-center gap-4">
-            <Select value={focus} onValueChange={setFocus}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Select onValueChange={(value) => {
+              console.log('Bot selection changed:', value);
+              setSelectedBot(value);
+            }} value={selectedBot}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Select chatbot" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="">All Chatbots</SelectItem>
+                {CHATBOT_OPTIONS.map((bot) => (
+                  <SelectItem key={bot.value} value={bot.value}>{bot.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select onValueChange={(value) => {
+              console.log('Focus selection changed:', value);
+              setFocus(value);
+            }} value={focus}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select focus" />
               </SelectTrigger>
               <SelectContent>
-                {FOCUS_OPTIONS.map(option => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
+                {FOCUS_OPTIONS.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>{option.label}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
