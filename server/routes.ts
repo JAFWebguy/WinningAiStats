@@ -5,10 +5,15 @@ import { WebSocketServer } from 'ws';
 import { marketShareData } from "../shared/data";
 import OpenAI from 'openai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI client with error handling
+let openai: OpenAI | null = null;
+try {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+} catch (error) {
+  console.error('Failed to initialize OpenAI client:', error);
+}
 
 // Simulate real-time updates
 function simulateMarketChanges() {
@@ -48,6 +53,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Market Insights Generator endpoint
   app.post('/api/generate-insights', async (req, res) => {
     try {
+      if (!openai) {
+        return res.status(503).json({ 
+          error: 'AI service unavailable. Please check API key configuration.' 
+        });
+      }
       const { focus = 'market trends' } = req.body;
 
       const prompt = `Analyze the following AI Chatbot market share data and provide insights about ${focus}:
