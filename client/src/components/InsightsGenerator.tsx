@@ -2,9 +2,17 @@ import { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, Sparkles } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Loader2, Sparkles, Copy, Share2, Mail, MessageSquare } from "lucide-react";
+import { SiNotion, SiSlack } from "react-icons/si";
 import { motion } from "framer-motion";
 import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 const FOCUS_OPTIONS = [
   { value: "market trends", label: "Market Trends" },
@@ -18,6 +26,7 @@ export function InsightsGenerator() {
   const [isLoading, setIsLoading] = useState(false);
   const [focus, setFocus] = useState("market trends");
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const generateInsights = async () => {
     setIsLoading(true);
@@ -34,6 +43,40 @@ export function InsightsGenerator() {
     }
   };
 
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(insights);
+      toast({
+        title: "Copied to clipboard",
+        description: "The insights have been copied to your clipboard.",
+      });
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please try copying manually.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const shareToEmail = () => {
+    const subject = encodeURIComponent("AI Chatbot Market Insights");
+    const body = encodeURIComponent(insights);
+    window.open(`mailto:?subject=${subject}&body=${body}`);
+  };
+
+  const shareToSlack = () => {
+    // Using Slack's Web API to share content
+    const text = encodeURIComponent(insights);
+    window.open(`https://slack.com/share?text=${text}`);
+  };
+
+  const shareToNotion = () => {
+    // Using Notion's sharing URL scheme
+    const text = encodeURIComponent(insights);
+    window.open(`https://www.notion.so/create-page?title=AI%20Market%20Insights&content=${text}`);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -47,7 +90,7 @@ export function InsightsGenerator() {
             <Sparkles className="h-5 w-5" />
             AI Market Insights Generator
           </h2>
-          
+
           <div className="flex items-center gap-4">
             <Select value={focus} onValueChange={setFocus}>
               <SelectTrigger className="w-[180px]">
@@ -61,7 +104,7 @@ export function InsightsGenerator() {
                 ))}
               </SelectContent>
             </Select>
-            
+
             <Button 
               onClick={generateInsights}
               disabled={isLoading}
@@ -86,6 +129,41 @@ export function InsightsGenerator() {
 
           {insights && (
             <div className="mt-4 p-4 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-cyan-500/20">
+              <div className="flex justify-end gap-2 mb-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={copyToClipboard}
+                  className="hover:bg-cyan-500/10"
+                >
+                  <Copy className="h-4 w-4" />
+                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="hover:bg-cyan-500/10"
+                    >
+                      <Share2 className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={shareToEmail}>
+                      <Mail className="mr-2 h-4 w-4" />
+                      <span>Email</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={shareToSlack}>
+                      <SiSlack className="mr-2 h-4 w-4" />
+                      <span>Slack</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={shareToNotion}>
+                      <SiNotion className="mr-2 h-4 w-4" />
+                      <span>Notion</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
               <div className="prose dark:prose-invert max-w-none">
                 <div dangerouslySetInnerHTML={{ __html: insights.replace(/\n/g, '<br />') }} />
               </div>
