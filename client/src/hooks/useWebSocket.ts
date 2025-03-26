@@ -33,6 +33,23 @@ export function useWebSocket<T>(initialData: T) {
     socket.onerror = (err) => {
       console.error('WebSocket error:', err);
       setError('WebSocket connection error');
+      
+      // Attempt reconnection if under max retries
+      if (retryCount < MAX_RETRIES) {
+        setTimeout(() => {
+          setRetryCount(prev => prev + 1);
+          connect();
+        }, RETRY_DELAY);
+      }
+    };
+
+    socket.onclose = () => {
+      if (retryCount < MAX_RETRIES) {
+        setTimeout(() => {
+          setRetryCount(prev => prev + 1);
+          connect();
+        }, RETRY_DELAY);
+      }
     };
 
     socket.onclose = () => {

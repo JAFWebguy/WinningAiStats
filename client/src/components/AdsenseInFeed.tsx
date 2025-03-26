@@ -23,13 +23,17 @@ export function AdsenseInFeed() {
       script.async = true;
       script.crossOrigin = 'anonymous';
       // Replace with your AdSense Publisher ID
-      script.dataset.adClient = 'ca-pub-XXXXXXXXXXXXXXXX';
-      document.head.appendChild(script);
+      // Only initialize if not already loaded
+      if (!document.querySelector('script[src*="adsbygoogle"]')) {
+        script.dataset.adClient = 'ca-pub-XXXXXXXXXXXXXXXX';
+        document.head.appendChild(script);
+      }
 
       // Initialize ads when script loads
       script.onload = () => {
-        if (adRef.current) {
+        if (adRef.current && !adRef.current.hasAttribute('data-ad-loaded')) {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
+          adRef.current.setAttribute('data-ad-loaded', 'true');
         }
       };
     } catch (err) {
