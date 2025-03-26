@@ -1,3 +1,5 @@
+import posthog from './posthog';
+
 // Define window.gtag
 declare global {
   interface Window {
@@ -12,11 +14,29 @@ declare global {
 
 // Track page views
 export const trackPageView = (url: string) => {
+  // Track in Google Analytics
   if (typeof window.gtag !== 'undefined') {
     window.gtag('config', 'G-DQ3D5GFG9X', {
       page_path: url,
     });
   }
+
+  // Track in PostHog
+  posthog.capture('$pageview', {
+    url,
+    referrer: document.referrer,
+  });
+};
+
+// Track custom events
+export const trackEvent = (eventName: string, properties?: Record<string, any>) => {
+  // Track in Google Analytics
+  if (typeof window.gtag !== 'undefined') {
+    window.gtag('event', eventName, properties);
+  }
+
+  // Track in PostHog
+  posthog.capture(eventName, properties);
 };
 
 // Future Tasks:
