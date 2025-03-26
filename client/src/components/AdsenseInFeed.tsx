@@ -30,13 +30,12 @@ export function AdsenseInFeed() {
   return (
     <Card className="min-h-[100px] overflow-hidden glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
       <ins 
-        ref={adRef}
         className="adsbygoogle"
-        style={{ display: 'block', minHeight: '100px' }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-7959951727406050"
-        data-ad-slot="XXXXXXXXXX" // Replace with your Ad unit ID from AdSense
-        data-ad-format="fluid"
-        data-ad-layout-key="-6t+ed+2i-1n-4w"
+        data-ad-slot="7678973600"
+        data-ad-format="auto"
+        data-full-width-responsive="true"
       />
     </Card>
   );
