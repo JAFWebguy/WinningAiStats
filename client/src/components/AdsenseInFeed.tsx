@@ -17,25 +17,11 @@ export function AdsenseInFeed() {
     loadedRef.current = true;
 
     try {
-      // Create script element for AdSense
-      const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
-      script.async = true;
-      script.crossOrigin = 'anonymous';
-      // Replace with your AdSense Publisher ID
-      // Only initialize if not already loaded
-      if (!document.querySelector('script[src*="adsbygoogle"]')) {
-        script.dataset.adClient = 'ca-pub-XXXXXXXXXXXXXXXX';
-        document.head.appendChild(script);
+      // Initialize ads when component mounts
+      if (adRef.current && !adRef.current.hasAttribute('data-ad-loaded')) {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        adRef.current.setAttribute('data-ad-loaded', 'true');
       }
-
-      // Initialize ads when script loads
-      script.onload = () => {
-        if (adRef.current && !adRef.current.hasAttribute('data-ad-loaded')) {
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-          adRef.current.setAttribute('data-ad-loaded', 'true');
-        }
-      };
     } catch (err) {
       console.error('Error loading AdSense:', err);
     }
@@ -43,14 +29,14 @@ export function AdsenseInFeed() {
 
   return (
     <Card className="min-h-[100px] overflow-hidden glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_10px_rgba(0,255,255,0.1)] animate-pulse-border">
-      <div 
+      <ins 
         ref={adRef}
-        style={{ minHeight: '100px', display: 'block' }}
         className="adsbygoogle"
-        data-ad-layout="in-article"
+        style={{ display: 'block', minHeight: '100px' }}
+        data-ad-client="ca-pub-7959951727406050"
+        data-ad-slot="XXXXXXXXXX" // Replace with your Ad unit ID from AdSense
         data-ad-format="fluid"
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" // Replace with your AdSense Publisher ID
-        data-ad-slot="XXXXXXXXXX" // Replace with your Ad Slot ID
+        data-ad-layout-key="-6t+ed+2i-1n-4w"
       />
     </Card>
   );
