@@ -7,13 +7,8 @@ import OpenAI from 'openai';
 
 // Initialize OpenAI client with error handling
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'dummy-key',
+  apiKey: process.env.OPENAI_API_KEY,
 });
-
-// Validate OpenAI key on startup
-if (!process.env.OPENAI_API_KEY) {
-  console.warn('Warning: OPENAI_API_KEY not set. AI features will be disabled.');
-}
 
 // Simulate real-time updates
 function simulateMarketChanges() {
