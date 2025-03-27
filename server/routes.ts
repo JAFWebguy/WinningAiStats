@@ -1,9 +1,10 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
+import { type Server } from "http";
 import { storage } from "./storage";
 import { WebSocketServer } from 'ws';
 import { marketShareData } from "../shared/data";
 import OpenAI from 'openai';
+import analyticsRouter from './routes/analytics';
 
 // Initialize OpenAI client with error handling
 const openai = new OpenAI({
@@ -19,11 +20,9 @@ function simulateMarketChanges() {
   }));
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
-  const httpServer = createServer(app);
-
+export async function registerRoutes(app: Express, server: Server): Promise<void> {
   // Create WebSocket server
-  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  const wss = new WebSocketServer({ server, path: '/ws' });
 
   wss.on('connection', (ws) => {
     console.log('Client connected');
@@ -43,6 +42,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('Client disconnected');
       clearInterval(interval);
     });
+  });
+
+  // Platform comparison endpoint
+  app.get('/api/compare-platforms', (req, res) => {
+    try {
+      const { platform1, platform2 } = req.query;
+      
+      if (!platform1 || !platform2) {
+        return res.status(400).json({ error: 'Both platform1 and platform2 are required' });
+      }
+
+      const p1Data = marketShareData.find(p => p.name === platform1);
+      const p2Data = marketShareData.find(p => p.name === platform2);
+
+      if (!p1Data || !p2Data) {
+        return res.status(404).json({ error: 'One or both platforms not found' });
+      }
+
+      const comparisonData = {
+        platform1: p1Data.name,
+        platform2: p2Data.name,
+        comparisonMetrics: {
+          marketShare: {
+            platform1: p1Data.share,
+            platform2: p2Data.share,
+          },
+          growth: {
+            platform1: p1Data.growth,
+            platform2: p2Data.growth,
+          },
+          metrics: {
+            description: {
+              platform1: p1Data.description,
+              platform2: p2Data.description,
+            },
+            llms: {
+              platform1: p1Data.llms,
+              platform2: p2Data.llms,
+            }
+          }
+        }
+      };
+
+      res.json(comparisonData);
+    } catch (error) {
+      console.error('Error comparing platforms:', error);
+      res.status(500).json({ error: 'Failed to compare platforms' });
+    }
+  });
+
+  // Historical market data endpoint
+  app.get('/api/market-share-history', (req, res) => {
+    try {
+      const { platform, startDate, endDate } = req.query;
+      
+      if (!platform) {
+        return res.status(400).json({ error: 'Platform is required' });
+      }
+
+      // Generate some historical data points
+      const generateHistoricalData = () => {
+        const platformData = marketShareData.find(p => p.name === platform);
+        if (!platformData) {
+          return [];
+        }
+
+        const dataPoints = [];
+        const start = startDate ? new Date(startDate as string) : new Date('2024-01-01');
+        const end = endDate ? new Date(endDate as string) : new Date();
+        const totalDays = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+        
+        for (let i = 0; i <= totalDays; i += 7) { // Weekly data points
+          const currentDate = new Date(start.getTime() + i * 24 * 60 * 60 * 1000);
+          dataPoints.push({
+            platformName: platformData.name,
+            marketShare: platformData.share + (Math.random() * 2 - 1), // ±1% variation
+            growth: platformData.growth + (Math.random() * 1 - 0.5), // ±0.5% variation
+            timestamp: currentDate.toISOString()
+          });
+        }
+
+        return dataPoints;
+      };
+
+      const historicalData = generateHistoricalData();
+      res.json(historicalData);
+    } catch (error) {
+      console.error('Error fetching historical data:', error);
+      res.status(500).json({ error: 'Failed to fetch historical data' });
+    }
   });
 
   // AI Market Insights Generator endpoint
@@ -81,5 +170,6 @@ Format the response in clear, concise bullet points.`;
     }
   });
 
-  return httpServer;
+  // Register analytics routes
+  app.use('/api', analyticsRouter);
 }
