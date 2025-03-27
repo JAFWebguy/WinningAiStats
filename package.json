@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx server/index.ts",
-    "build": "cd client && npm install && npm run build && cd .. && npm install",
+    "build": "cd client && npm install && npm run build && cd .. && tsc && cp -r client/dist/public dist/",
     "start": "node dist/server/index.js"
   },
   "dependencies": {
