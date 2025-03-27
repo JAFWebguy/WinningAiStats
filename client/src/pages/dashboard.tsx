@@ -13,6 +13,8 @@ import { InsightsGenerator } from "@/components/InsightsGenerator";
 import { Footer } from "@/components/Footer";
 import { StatsSkeleton, ChartSkeleton, TableRowSkeleton } from "@/components/ui/skeleton";
 import { LLMMetricsGrid } from "@/components/LLMMetricsGrid";
+import { PlatformComparison } from "@/components/PlatformComparison";
+import { HistoricalData } from "@/components/HistoricalData";
 
 export default function Dashboard() {
   const { data: marketShareData, error, isReconnecting } = useWebSocket(initialData);
@@ -227,6 +229,16 @@ export default function Dashboard() {
           ) : (
             <LLMMetricsGrid data={marketShareData} />
           )}
+        </div>
+
+        {/* Platform Comparison Section */}
+        <div className="mt-8">
+          <PlatformComparison />
+        </div>
+
+        {/* Historical Data Section */}
+        <div className="mt-8">
+          <HistoricalData />
         </div>
       </main>
       <Footer />
