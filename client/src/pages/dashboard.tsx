@@ -67,6 +67,8 @@ export function Dashboard() {
     console.error('WebSocket error:', error);
   }
 
+  const isLoading = !isConnected || isReconnecting;
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -108,7 +110,7 @@ export function Dashboard() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Market Share Distribution</h2>
-            {!isConnected ? (
+            {isLoading ? (
               <ChartSkeleton />
             ) : (
               <MarketShareChart data={marketShareChartData} />
@@ -116,7 +118,7 @@ export function Dashboard() {
           </Card>
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Growth Trends</h2>
-            {!isConnected ? (
+            {isLoading ? (
               <ChartSkeleton />
             ) : (
               <GrowthChart data={platformData} />
@@ -127,7 +129,7 @@ export function Dashboard() {
         <div className="mt-8">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">LLM Metrics</h2>
-            {!isConnected ? (
+            {isLoading ? (
               <TableRowSkeleton />
             ) : (
               <LLMMetricsGrid data={llmMetrics} />
@@ -138,7 +140,7 @@ export function Dashboard() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Platform Comparison</h2>
-            {!isConnected ? (
+            {isLoading ? (
               <TableRowSkeleton />
             ) : (
               <PlatformComparison data={platformData} />
@@ -146,7 +148,7 @@ export function Dashboard() {
           </Card>
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Historical Data</h2>
-            {!isConnected ? (
+            {isLoading ? (
               <TableRowSkeleton />
             ) : (
               <HistoricalData data={platformData} />
