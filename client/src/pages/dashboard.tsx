@@ -52,8 +52,7 @@ const sampleLLMMetrics: LLMMetrics[] = [
 ];
 
 export function Dashboard() {
-  const { data: marketShareData, error, isReconnecting } = useWebSocket(initialData);
-  const isLoading = !marketShareData || isReconnecting;
+  const { data: marketShareData, error, isConnected, isReconnecting } = useWebSocket(initialData);
   const [platformData] = useState(samplePlatformData);
   const [llmMetrics] = useState(sampleLLMMetrics);
 
@@ -109,7 +108,7 @@ export function Dashboard() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Market Share Distribution</h2>
-            {isLoading ? (
+            {!isConnected ? (
               <ChartSkeleton />
             ) : (
               <MarketShareChart data={marketShareChartData} />
@@ -117,7 +116,7 @@ export function Dashboard() {
           </Card>
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Growth Trends</h2>
-            {isLoading ? (
+            {!isConnected ? (
               <ChartSkeleton />
             ) : (
               <GrowthChart data={platformData} />
@@ -128,7 +127,7 @@ export function Dashboard() {
         <div className="mt-8">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">LLM Metrics</h2>
-            {isLoading ? (
+            {!isConnected ? (
               <TableRowSkeleton />
             ) : (
               <LLMMetricsGrid data={llmMetrics} />
@@ -139,7 +138,7 @@ export function Dashboard() {
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Platform Comparison</h2>
-            {isLoading ? (
+            {!isConnected ? (
               <TableRowSkeleton />
             ) : (
               <PlatformComparison data={platformData} />
@@ -147,7 +146,7 @@ export function Dashboard() {
           </Card>
           <Card className="p-6">
             <h2 className="text-lg font-semibold mb-4">Historical Data</h2>
-            {isLoading ? (
+            {!isConnected ? (
               <TableRowSkeleton />
             ) : (
               <HistoricalData data={platformData} />
