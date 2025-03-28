@@ -11,6 +11,9 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, '../shared')
     }
   },
+  css: {
+    postcss: './postcss.config.js',
+  },
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -18,14 +21,8 @@ export default defineConfig({
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
-          'ui-vendor': [
-            '@radix-ui/react-slot',
-            '@radix-ui/react-tabs',
-            '@radix-ui/react-toast',
-            'class-variance-authority',
-            'clsx',
-            'tailwind-merge'
-          ]
+          'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-label', '@radix-ui/react-slot', '@radix-ui/react-toast'],
+          'chart-vendor': ['recharts']
         }
       }
     }
