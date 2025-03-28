@@ -11,9 +11,17 @@
     {
       "src": "dist/server/index.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
+    {
+      "src": "/ws",
+      "dest": "/api/ws.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "dist/server/index.js"
