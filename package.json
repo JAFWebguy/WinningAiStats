@@ -4,16 +4,19 @@
   "private": true,
   "scripts": {
     "dev": "tsx server/index.ts",
-    "build": "cd client && npm install && npm run build && cd .. && tsc && cp -r client/dist/public dist/",
+    "build": "tsc --project tsconfig.server.json",
     "start": "node dist/server/index.js"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.28",
     "@types/ws": "^8.5.10",
     "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.41.0",
     "express": "^4.18.3",
     "nanoid": "^5.0.6",
+    "openai": "^4.90.0",
     "tsx": "^4.7.1",
     "typescript": "^5.4.2",
     "ws": "^8.16.0"
