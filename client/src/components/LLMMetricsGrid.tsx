@@ -1,127 +1,31 @@
-import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
-import type { MarketShareEntry } from "@shared/data";
-import { Cpu, Globe, Clock, DollarSign, Server, Database } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { LLMMetrics } from "@shared/data";
 
 interface LLMMetricsGridProps {
-  data: MarketShareEntry[];
+  data: LLMMetrics[];
 }
 
 export function LLMMetricsGrid({ data }: LLMMetricsGridProps) {
-  // Split data into two columns: 4 items for left, 3 for right
-  const leftColumnData = data.slice(0, 4);
-  const rightColumnData = data.slice(4);
-
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3 }}
-      className="transform transition-all duration-300 animate-hologram"
-    >
-      <Card className="p-6 glass-effect border border-slate-200 dark:border-cyan-500/20 shadow-[0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[0_0_15px_rgba(0,255,255,0.15)] animate-pulse-border">
-        <h2 className="text-xl font-semibold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
-          Technical Metrics & Capabilities
-        </h2>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Left Column - 4 items */}
-          <div className="space-y-4">
-            {leftColumnData.map((platform) => (
-              <Card key={platform.name} className="p-4 backdrop-blur-sm bg-white/5 border-slate-200 dark:border-cyan-500/20">
-                <h3 className="text-lg font-semibold mb-4 text-slate-900 dark:text-cyan-400">
-                  {platform.name}
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Cpu className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Parameters:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.parameters}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Database className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Training Data:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.trainingDataSize}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Latency:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.averageLatency}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Globe className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Languages:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.supportedLanguages}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <DollarSign className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Pricing:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.apiPricing}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Server className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Hardware:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.hardwareRequirements}</span>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-
-          {/* Right Column - 3 items */}
-          <div className="space-y-4">
-            {rightColumnData.map((platform) => (
-              <Card key={platform.name} className="p-4 backdrop-blur-sm bg-white/5 border-slate-200 dark:border-cyan-500/20">
-                <h3 className="text-lg font-semibold mb-4 text-slate-900 dark:text-cyan-400">
-                  {platform.name}
-                </h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Cpu className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Parameters:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.parameters}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Database className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Training Data:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.trainingDataSize}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Clock className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Latency:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.averageLatency}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Globe className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Languages:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.supportedLanguages}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <DollarSign className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Pricing:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.apiPricing}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-sm">
-                    <Server className="h-4 w-4 text-slate-500 dark:text-cyan-500" />
-                    <span className="text-slate-600 dark:text-slate-300">Hardware:</span>
-                    <span className="text-slate-900 dark:text-cyan-400">{platform.metrics.hardwareRequirements}</span>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+    <div className="space-y-4">
+      <div className="grid grid-cols-6 gap-4">
+        <div className="font-medium">Model</div>
+        <div className="font-medium">Parameters</div>
+        <div className="font-medium">Training Tokens</div>
+        <div className="font-medium">Inference Speed</div>
+        <div className="font-medium">Cost/Token</div>
+        <div className="font-medium">Release Date</div>
+      </div>
+      {data.map((model) => (
+        <div key={model.name} className="grid grid-cols-6 gap-4">
+          <div>{model.name}</div>
+          <div>{model.parameters}B</div>
+          <div>{typeof model.trainingTokens === 'number' ? `${(model.trainingTokens / 1000000000).toFixed(1)}B` : model.trainingTokens}</div>
+          <div>{model.inferenceSpeed}ms</div>
+          <div>{typeof model.costPerToken === 'number' ? `$${model.costPerToken.toFixed(4)}` : model.costPerToken}</div>
+          <div>{model.releaseDate}</div>
         </div>
-      </Card>
-    </motion.div>
+      ))}
+    </div>
   );
 }

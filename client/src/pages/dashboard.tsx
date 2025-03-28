@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { MarketShareChart } from "@/components/MarketShareChart";
 import { GrowthChart } from "@/components/GrowthChart";
@@ -15,10 +15,62 @@ import { StatsSkeleton, ChartSkeleton, TableRowSkeleton } from "@/components/ui/
 import { LLMMetricsGrid } from "@/components/LLMMetricsGrid";
 import { PlatformComparison } from "@/components/PlatformComparison";
 import { HistoricalData } from "@/components/HistoricalData";
+import { useState } from "react";
+import { MarketShareData, PlatformData, LLMMetrics } from "@shared/data";
 
-export default function Dashboard() {
+// Sample data for demonstration
+const sampleMarketShareData: MarketShareData[] = [
+  { name: "ChatGPT", value: 59.70, color: "#FF6B6B" },
+  { name: "Microsoft Copilot", value: 14.40, color: "#4ECDC4" },
+  { name: "Google Gemini", value: 13.50, color: "#45B7D1" },
+  { name: "Perplexity", value: 6.20, color: "#96CEB4" },
+  { name: "Claude AI", value: 3.20, color: "#FFEEAD" },
+  { name: "Grok", value: 0.80, color: "#D4A5A5" },
+  { name: "Deepseek", value: 0.70, color: "#9B59B6" }
+];
+
+const samplePlatformData: PlatformData[] = [
+  { name: "ChatGPT", marketShare: 59.70, growth: 8, revenue: 1000000000, userBase: 100000000 },
+  { name: "Microsoft Copilot", marketShare: 14.40, growth: 6, revenue: 500000000, userBase: 50000000 },
+  { name: "Google Gemini", marketShare: 13.50, growth: 5, revenue: 400000000, userBase: 40000000 },
+  { name: "Perplexity", marketShare: 6.20, growth: 10, revenue: 100000000, userBase: 10000000 },
+  { name: "Claude AI", marketShare: 3.20, growth: 14, revenue: 80000000, userBase: 8000000 },
+  { name: "Grok", marketShare: 0.80, growth: 12, revenue: 20000000, userBase: 2000000 },
+  { name: "Deepseek", marketShare: 0.70, growth: 10, revenue: 15000000, userBase: 1500000 }
+];
+
+const sampleLLMMetrics: LLMMetrics[] = [
+  {
+    name: "GPT-4",
+    parameters: 175,
+    trainingTokens: 1500000000,
+    inferenceSpeed: 500,
+    costPerToken: 0.03,
+    releaseDate: "2023-03-14"
+  },
+  {
+    name: "Claude 3",
+    parameters: 400,
+    trainingTokens: 1200000000,
+    inferenceSpeed: 450,
+    costPerToken: 0.028,
+    releaseDate: "2023-07-14"
+  },
+  {
+    name: "Gemini",
+    parameters: 785,
+    trainingTokens: 2000000000,
+    inferenceSpeed: 400,
+    costPerToken: 0.025,
+    releaseDate: "2023-05-10"
+  }
+];
+
+export function Dashboard() {
   const { data: marketShareData, error, isReconnecting } = useWebSocket(initialData);
   const isLoading = !marketShareData || isReconnecting;
+  const [platformData] = useState(samplePlatformData);
+  const [llmMetrics] = useState(sampleLLMMetrics);
 
   if (error) {
     console.error('WebSocket error:', error);
@@ -130,7 +182,7 @@ export default function Dashboard() {
                   <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
                     Quarterly Growth Rates
                   </h2>
-                  <GrowthChart data={marketShareData} />
+                  <GrowthChart data={platformData} />
                 </>
               )}
             </Card>
@@ -227,7 +279,7 @@ export default function Dashboard() {
               </div>
             </Card>
           ) : (
-            <LLMMetricsGrid data={marketShareData} />
+            <LLMMetricsGrid data={llmMetrics} />
           )}
         </div>
 

@@ -10,8 +10,8 @@ import {
 } from '@/components/ui/popover';
 
 interface DatePickerProps {
-  value: Date | null;
-  onChange: (date: Date | null) => void;
+  value?: Date;
+  onChange?: (date: Date | undefined) => void;
 }
 
 export function DatePicker({ value, onChange }: DatePickerProps) {
@@ -21,7 +21,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
         <Button
           variant="outline"
           className={cn(
-            'w-full justify-start text-left font-normal',
+            'w-[280px] justify-start text-left font-normal',
             !value && 'text-muted-foreground'
           )}
         >
@@ -29,7 +29,7 @@ export function DatePicker({ value, onChange }: DatePickerProps) {
           {value ? format(value, 'PPP') : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           selected={value}
