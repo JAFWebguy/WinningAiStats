@@ -2,7 +2,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PlatformData } from "@shared/data";
 
 interface PlatformComparisonProps {
-  data: PlatformData[];
+  data: Array<{
+    name: string;
+    marketShare: number;
+    growth: number;
+    revenue: number;
+  }>;
 }
 
 export function PlatformComparison({ data }: PlatformComparisonProps) {

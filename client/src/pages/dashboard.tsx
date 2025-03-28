@@ -7,7 +7,7 @@ import { StatsCard } from "@/components/StatsCard";
 import { BrainAnimation } from "@/components/BrainAnimation";
 import { PlatformInfoDrawer } from "@/components/PlatformInfoDrawer";
 import { useWebSocket } from "@/hooks/useWebSocket";
-import { marketShareData as initialData } from "@shared/data";
+import { marketShareData as initialData, MarketShareEntry, PlatformData, LLMMetrics } from "@shared/data";
 import { AdsenseInFeed } from "@/components/AdsenseInFeed";
 import { InsightsGenerator } from "@/components/InsightsGenerator";
 import { Footer } from "@/components/Footer";
@@ -16,19 +16,8 @@ import { LLMMetricsGrid } from "@/components/LLMMetricsGrid";
 import { PlatformComparison } from "@/components/PlatformComparison";
 import { HistoricalData } from "@/components/HistoricalData";
 import { useState } from "react";
-import { MarketShareData, PlatformData, LLMMetrics } from "@shared/data";
 
 // Sample data for demonstration
-const sampleMarketShareData: MarketShareData[] = [
-  { name: "ChatGPT", value: 59.70, color: "#FF6B6B" },
-  { name: "Microsoft Copilot", value: 14.40, color: "#4ECDC4" },
-  { name: "Google Gemini", value: 13.50, color: "#45B7D1" },
-  { name: "Perplexity", value: 6.20, color: "#96CEB4" },
-  { name: "Claude AI", value: 3.20, color: "#FFEEAD" },
-  { name: "Grok", value: 0.80, color: "#D4A5A5" },
-  { name: "Deepseek", value: 0.70, color: "#9B59B6" }
-];
-
 const samplePlatformData: PlatformData[] = [
   { name: "ChatGPT", marketShare: 59.70, growth: 8, revenue: 1000000000, userBase: 100000000 },
   { name: "Microsoft Copilot", marketShare: 14.40, growth: 6, revenue: 500000000, userBase: 50000000 },
@@ -73,7 +62,7 @@ export function Dashboard() {
   const [llmMetrics] = useState(sampleLLMMetrics);
 
   // Convert MarketShareEntry[] to MarketShareData[]
-  const marketShareChartData: MarketShareData[] = marketShareData.map(entry => ({
+  const marketShareChartData = marketShareData.map(entry => ({
     name: entry.name,
     value: entry.share,
     color: getColorForPlatform(entry.name)

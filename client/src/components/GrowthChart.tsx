@@ -3,7 +3,10 @@ import { PlatformData } from "@shared/data";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 interface GrowthChartProps {
-  data: PlatformData[];
+  data: Array<{
+    name: string;
+    growth: number;
+  }>;
 }
 
 export function GrowthChart({ data }: GrowthChartProps) {

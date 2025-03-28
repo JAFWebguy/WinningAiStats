@@ -2,7 +2,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { PlatformData } from "@shared/data";
 
 interface HistoricalDataProps {
-  data: PlatformData[];
+  data: Array<{
+    name: string;
+    userBase: number;
+    growth: number;
+    revenue: number;
+  }>;
 }
 
 export function HistoricalData({ data }: HistoricalDataProps) {
