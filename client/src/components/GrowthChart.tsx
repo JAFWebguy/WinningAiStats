@@ -36,10 +36,10 @@ export function GrowthChart({ data }: GrowthChartProps) {
 
   // Define colors for the bars
   const getBarColor = (value: number) => {
-    if (value > 12) return "#FF6B6B"; // Highest growth - red
-    if (value > 9) return "#FFD166"; // High growth - yellow
-    if (value > 6) return "#06D6A0"; // Medium growth - green
-    return "#118AB2"; // Low growth - blue
+    if (value >= 14) return "#FF6B6B"; // Highest growth (Claude AI) - red
+    if (value >= 12) return "#4ECDC4"; // High growth (Grok) - turquoise
+    if (value >= 10) return "#45B7D1"; // Medium-high growth (Perplexity, Deepseek) - light blue
+    return "#96CEB4"; // Lower growth - mint green
   };
 
   return (
@@ -49,45 +49,42 @@ export function GrowthChart({ data }: GrowthChartProps) {
         margin={{
           top: 20,
           right: 20,
-          left: 0,
-          bottom: 30,
+          left: 20,
+          bottom: 50,
         }}
       >
-        <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
+        <CartesianGrid strokeDasharray="3 3" opacity={0.1} />
         <XAxis 
           dataKey="name" 
-          tick={{ fontSize: 12 }} 
+          tick={{ fontSize: 12, fill: '#94a3b8' }} 
           interval={0}
           angle={-45}
           textAnchor="end"
+          height={60}
         />
         <YAxis 
-          tick={{ fontSize: 12 }}
+          tick={{ fontSize: 12, fill: '#94a3b8' }}
           label={{ 
             value: 'Growth (%)', 
             angle: -90, 
             position: 'insideLeft',
-            style: { textAnchor: 'middle' }
+            style: { textAnchor: 'middle', fill: '#94a3b8' }
           }}
         />
         <Tooltip 
           formatter={(value: number) => [`${value}%`, 'Growth Rate']}
           contentStyle={{ 
-            backgroundColor: 'rgba(10, 10, 25, 0.8)',
-            borderColor: 'rgba(0, 255, 255, 0.3)',
-            borderRadius: '8px',
-            boxShadow: '0 4px 20px rgba(0, 255, 255, 0.2)'
+            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            borderColor: '#334155',
+            borderRadius: '6px',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
           }}
+          labelStyle={{ color: '#94a3b8' }}
+          itemStyle={{ color: '#e2e8f0' }}
         />
         <Bar 
           dataKey="growth" 
           radius={[4, 4, 0, 0]}
-          // Use dynamic colors based on growth value
-          fill="#00CED1"
-          {...(chartData.length < 10 ? { 
-            isAnimationActive: true,
-            animationDuration: 1500
-          } : {})}
         >
           {chartData.map((entry, index) => (
             <Bar 

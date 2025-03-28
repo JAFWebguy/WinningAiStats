@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { formatNumber } from "@/lib/utils";
 
 export interface LLMMetrics {
@@ -74,30 +81,27 @@ export function LLMMetricsGrid({ data }: LLMMetricsGridProps) {
   };
 
   return (
-    <div className="overflow-x-auto">
-      <Table className="w-full">
+    <div className="w-full overflow-auto">
+      <Table>
         <TableHeader>
-          <TableRow className="hover:bg-muted/5">
-            <TableHead className="w-[180px]">Model</TableHead>
-            <TableHead>Parameters</TableHead>
-            <TableHead>Training Tokens</TableHead>
-            <TableHead>Inference Speed</TableHead>
-            <TableHead>Cost Per Token</TableHead>
-            <TableHead>Release Date</TableHead>
+          <TableRow>
+            <TableHead className="w-[150px]">Model</TableHead>
+            <TableHead className="text-right">Parameters</TableHead>
+            <TableHead className="text-right">Training Tokens</TableHead>
+            <TableHead className="text-right">Inference Speed</TableHead>
+            <TableHead className="text-right">Cost Per Token</TableHead>
+            <TableHead className="text-right">Release Date</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {gridData.map((model, index) => (
-            <TableRow 
-              key={index} 
-              className="hover:bg-primary/5 transition-colors"
-            >
-              <TableCell className="font-medium">{model.name}</TableCell>
-              <TableCell>{formatParameters(model.parameters)}</TableCell>
-              <TableCell>{formatTrainingTokens(model.trainingTokens)}</TableCell>
-              <TableCell>{formatInferenceSpeed(model.inferenceSpeed)}</TableCell>
-              <TableCell>{formatCostPerToken(model.costPerToken)}</TableCell>
-              <TableCell>{model.releaseDate}</TableCell>
+          {gridData.map((metrics) => (
+            <TableRow key={metrics.name}>
+              <TableCell className="font-medium">{metrics.name}</TableCell>
+              <TableCell className="text-right">{formatParameters(metrics.parameters)}</TableCell>
+              <TableCell className="text-right">{formatTrainingTokens(metrics.trainingTokens)}</TableCell>
+              <TableCell className="text-right">{formatInferenceSpeed(metrics.inferenceSpeed)}</TableCell>
+              <TableCell className="text-right">{formatCostPerToken(metrics.costPerToken)}</TableCell>
+              <TableCell className="text-right">{new Date(metrics.releaseDate).toLocaleDateString()}</TableCell>
             </TableRow>
           ))}
         </TableBody>

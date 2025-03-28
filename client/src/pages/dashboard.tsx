@@ -38,15 +38,15 @@ const sampleLLMMetrics: LLMMetrics[] = [
   {
     name: "GPT-4",
     parameters: 175,
-    trainingTokens: 1500000000,
+    trainingTokens: 1.5,
     inferenceSpeed: 500,
-    costPerToken: 0.03,
+    costPerToken: 0.030,
     releaseDate: "2023-03-14"
   },
   {
     name: "Claude 3",
     parameters: 400,
-    trainingTokens: 1200000000,
+    trainingTokens: 1.2,
     inferenceSpeed: 450,
     costPerToken: 0.028,
     releaseDate: "2023-07-14"
@@ -54,7 +54,7 @@ const sampleLLMMetrics: LLMMetrics[] = [
   {
     name: "Gemini",
     parameters: 785,
-    trainingTokens: 2000000000,
+    trainingTokens: 2.0,
     inferenceSpeed: 400,
     costPerToken: 0.025,
     releaseDate: "2023-05-10"
@@ -188,11 +188,11 @@ export function Dashboard() {
 // Helper function to get colors for platforms
 function getColorForPlatform(name: string): string {
   const colors: Record<string, string> = {
-    "ChatGPT": "#FF6B6B",
-    "Microsoft Copilot": "#4ECDC4",
-    "Google Gemini": "#45B7D1",
-    "Perplexity": "#96CEB4",
-    "Claude AI": "#FFEEAD",
+    "ChatGPT": "#4ECDC4",
+    "Microsoft Copilot": "#45B7D1",
+    "Google Gemini": "#96CEB4",
+    "Perplexity": "#FFEEAD",
+    "Claude AI": "#FF6B6B",
     "Grok": "#D4A5A5",
     "Deepseek": "#9B59B6"
   };
