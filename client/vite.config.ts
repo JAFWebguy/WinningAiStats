@@ -13,6 +13,9 @@ export default defineConfig({
   },
   css: {
     postcss: './postcss.config.js',
+    modules: {
+      localsConvention: 'camelCase'
+    }
   },
   build: {
     outDir: 'dist',

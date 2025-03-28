@@ -7,6 +7,9 @@ export default {
     './src/pages/**/*.{ts,tsx}',
     './src/app/**/*.{ts,tsx}',
     './src/ui/**/*.{ts,tsx}',
+    './src/lib/**/*.{ts,tsx}',
+    './src/hooks/**/*.{ts,tsx}',
+    './src/utils/**/*.{ts,tsx}',
   ],
   theme: {
     container: {
