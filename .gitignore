@@ -37,3 +37,4 @@ Thumbs.db
 server/public
 vite.config.ts.*
 *.tar.gz
+.vercel
