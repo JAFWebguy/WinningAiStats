@@ -72,6 +72,13 @@ export function Dashboard() {
   const [platformData] = useState(samplePlatformData);
   const [llmMetrics] = useState(sampleLLMMetrics);
 
+  // Convert MarketShareEntry[] to MarketShareData[]
+  const marketShareChartData: MarketShareData[] = marketShareData.map(entry => ({
+    name: entry.name,
+    value: entry.share,
+    color: getColorForPlatform(entry.name)
+  }));
+
   if (error) {
     console.error('WebSocket error:', error);
   }
@@ -161,7 +168,7 @@ export function Dashboard() {
                   <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-transparent bg-clip-text bg-gradient-to-r from-slate-700 to-slate-900 dark:from-primary dark:to-accent">
                     Market Share Distribution
                   </h2>
-                  <MarketShareChart data={marketShareData} />
+                  <MarketShareChart data={marketShareChartData} />
                 </>
               )}
             </Card>
@@ -285,15 +292,29 @@ export function Dashboard() {
 
         {/* Platform Comparison Section */}
         <div className="mt-8">
-          <PlatformComparison />
+          <PlatformComparison data={platformData} />
         </div>
 
         {/* Historical Data Section */}
         <div className="mt-8">
-          <HistoricalData />
+          <HistoricalData data={platformData} />
         </div>
       </main>
       <Footer />
     </div>
   );
+}
+
+// Helper function to get colors for platforms
+function getColorForPlatform(name: string): string {
+  const colors: Record<string, string> = {
+    "ChatGPT": "#FF6B6B",
+    "Microsoft Copilot": "#4ECDC4",
+    "Google Gemini": "#45B7D1",
+    "Perplexity": "#96CEB4",
+    "Claude AI": "#FFEEAD",
+    "Grok": "#D4A5A5",
+    "Deepseek": "#9B59B6"
+  };
+  return colors[name] || "#8884d8";
 }
