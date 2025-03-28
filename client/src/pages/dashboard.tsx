@@ -68,25 +68,23 @@ export function Dashboard() {
   const [chartData, setChartData] = useState<MarketShareData[]>([]);
 
   // Create a combined loading state
-  const isLoading = !isConnected || isReconnecting;
+  const isLoading = false; // Remove WebSocket-dependent loading state
 
   // Convert WebSocket data to chart data format
   useEffect(() => {
-    if (marketShareData && marketShareData.length > 0) {
-      setChartData(marketShareData.map(entry => ({
-        name: entry.name,
-        value: entry.share,
-        color: getColorForPlatform(entry.name)
-      })));
-    } else {
-      // Fallback to empty array if no data
-      setChartData([]);
-    }
+    // Use initialData if WebSocket fails
+    const dataToUse = (marketShareData && marketShareData.length > 0) ? marketShareData : initialData;
+    
+    setChartData(dataToUse.map(entry => ({
+      name: entry.name,
+      value: entry.share,
+      color: getColorForPlatform(entry.name)
+    })));
   }, [marketShareData]);
 
   if (error) {
     console.error('WebSocket error:', error);
-    // Continue rendering with available data instead of showing an error
+    // Continue rendering with initial data
   }
 
   return (

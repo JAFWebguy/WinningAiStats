@@ -81,13 +81,26 @@ export function useWebSocket<T>(initialData: T) {
   }, [initialData, retryCount]);
 
   useEffect(() => {
-    const cleanup = connect();
-    
-    // Cleanup function
-    return () => {
-      if (cleanup) cleanup();
-    };
-  }, [connect]);
+    // Always ensure we have data, even if connection fails
+    if (!data) {
+      setData(initialData);
+    }
+
+    // Attempt WebSocket connection
+    try {
+      const cleanup = connect();
+      
+      // Cleanup function
+      return () => {
+        if (cleanup) cleanup();
+      };
+    } catch (err) {
+      console.error('WebSocket connection failed:', err);
+      setError(err as Error);
+      // Ensure we still have data even if connection fails
+      setData(initialData);
+    }
+  }, [initialData, connect]);
 
   return { data, error, isConnected, isReconnecting };
 }

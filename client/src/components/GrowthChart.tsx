@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 
 export interface PlatformData {
   name: string;
-  marketShare?: number;
+  marketShare: number;
   growth: number;
-  revenue?: number;
-  userBase?: number;
+  revenue: number;
+  userBase: number;
 }
 
 export interface GrowthChartProps {
