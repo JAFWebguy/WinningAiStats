@@ -56,6 +56,9 @@ export function Dashboard() {
   const [platformData] = useState(samplePlatformData);
   const [llmMetrics] = useState(sampleLLMMetrics);
 
+  // Create a combined loading state
+  const isLoading = !isConnected || isReconnecting;
+
   // Convert MarketShareEntry[] to MarketShareData[]
   const marketShareChartData = marketShareData.map(entry => ({
     name: entry.name,
@@ -65,9 +68,8 @@ export function Dashboard() {
 
   if (error) {
     console.error('WebSocket error:', error);
+    // Continue rendering with available data instead of showing an error
   }
-
-  const isLoading = !isConnected || isReconnecting;
 
   return (
     <div className="min-h-screen bg-background">

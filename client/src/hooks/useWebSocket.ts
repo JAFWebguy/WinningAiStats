@@ -2,95 +2,92 @@ import { useState, useEffect, useCallback } from 'react';
 
 export function useWebSocket<T>(initialData: T) {
   const [data, setData] = useState<T>(initialData);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<Error | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [isReconnecting, setIsReconnecting] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
-  const MAX_RETRIES = 3;
-  const RETRY_DELAY = 3000;
 
   const connect = useCallback(() => {
     try {
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws`;
-      const socket = new WebSocket(wsUrl);
+      setIsReconnecting(true);
+      
+      // Get the correct WebSocket URL based on environment
+      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      let wsUrl = '';
+      
+      // For Vercel, use the domain without the port
+      if (window.location.hostname.includes('vercel.app')) {
+        wsUrl = `${protocol}//${window.location.hostname}/ws`;
+      } else {
+        // For local development
+        wsUrl = `${protocol}//${window.location.hostname}:4000/ws`;
+      }
+      
+      console.log('Connecting to WebSocket:', wsUrl);
+      const ws = new WebSocket(wsUrl);
 
-      socket.onmessage = (event) => {
+      ws.onopen = () => {
+        console.log('WebSocket connected');
+        setIsConnected(true);
+        setIsReconnecting(false);
+        setRetryCount(0);
+        setError(null);
+      };
+
+      ws.onmessage = (event) => {
         try {
           const parsedData = JSON.parse(event.data);
           setData(parsedData);
-          setError(null);
-          setRetryCount(0);
-          setIsConnected(true);
-          setIsReconnecting(false);
         } catch (err) {
-          console.error('WebSocket parse error:', err);
-          // Don't set error state for parse errors, keep using existing data
+          console.error('Failed to parse WebSocket data:', err);
         }
       };
 
-      socket.onopen = () => {
-        console.log('WebSocket connected');
-        setError(null);
-        setRetryCount(0);
-        setIsConnected(true);
+      ws.onerror = (event) => {
+        console.error('WebSocket error:', event);
+        setError(new Error('WebSocket connection error'));
+        setIsConnected(false);
+        // Don't disconnect on error, let the onclose handler handle reconnection
+      };
+
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+        setIsConnected(false);
         setIsReconnecting(false);
-      };
-
-      socket.onerror = (err) => {
-        console.error('WebSocket error:', err);
-        setIsConnected(false);
         
-        if (retryCount < MAX_RETRIES) {
-          setIsReconnecting(true);
-          setTimeout(() => {
-            setRetryCount(prev => prev + 1);
-            connect();
-          }, RETRY_DELAY);
+        // Only attempt to reconnect if we haven't exceeded the retry limit
+        if (retryCount < 3) {
+          console.log(`Attempting to reconnect (${retryCount + 1}/3)...`);
+          setRetryCount(prev => prev + 1);
+          setTimeout(() => connect(), 3000); // Reconnect after 3 seconds
         } else {
-          setError('WebSocket connection error');
-          setIsReconnecting(false);
+          console.log('Max reconnection attempts reached. Using initial data.');
+          // Use initial data as fallback
+          setData(initialData);
         }
       };
 
-      socket.onclose = () => {
-        setIsConnected(false);
-        if (retryCount < MAX_RETRIES) {
-          setIsReconnecting(true);
-          setTimeout(() => {
-            setRetryCount(prev => prev + 1);
-            connect();
-          }, RETRY_DELAY);
-        } else {
-          setError('WebSocket connection closed');
-          setIsReconnecting(false);
-        }
+      return () => {
+        ws.close();
       };
-
-      return socket;
     } catch (err) {
-      console.error('WebSocket connection error:', err);
-      setError('Failed to establish WebSocket connection');
+      console.error('Failed to establish WebSocket connection:', err);
+      setError(err instanceof Error ? err : new Error('Unknown WebSocket error'));
       setIsConnected(false);
       setIsReconnecting(false);
-      return null;
+      // Use initial data as fallback
+      setData(initialData);
     }
-  }, [retryCount]);
+  }, [initialData, retryCount]);
 
   useEffect(() => {
-    const socket = connect();
+    const cleanup = connect();
+    
+    // Cleanup function
     return () => {
-      if (socket) {
-        socket.close();
-      }
+      if (cleanup) cleanup();
     };
   }, [connect]);
 
-  return {
-    data,
-    error,
-    isConnected,
-    isReconnecting,
-    retryCount
-  };
+  return { data, error, isConnected, isReconnecting };
 }
