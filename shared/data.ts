@@ -1,10 +1,24 @@
 export interface LLMMetrics {
-  parameters: string;
-  trainingDataSize: string;
-  averageLatency: string;
-  supportedLanguages: number;
-  apiPricing: string;
-  hardwareRequirements: string;
+  name: string;
+  parameters: number;
+  trainingTokens: number | string;
+  inferenceSpeed: number;
+  costPerToken: number | string;
+  releaseDate: string;
+}
+
+export interface PlatformData {
+  name: string;
+  marketShare: number;
+  growth: number;
+  revenue: number;
+  userBase: number;
+}
+
+export interface MarketShareData {
+  name: string;
+  value: number;
+  color: string;
 }
 
 export interface MarketShareEntry {
@@ -24,12 +38,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "General-purpose AI chatbot",
     llms: "GPT-3.5, GPT-4",
     metrics: {
-      parameters: "175B (GPT-4)",
-      trainingDataSize: "Estimated 1.5T tokens",
-      averageLatency: "500-800ms",
-      supportedLanguages: 95,
-      apiPricing: "$0.03/1K tokens",
-      hardwareRequirements: "GPU optimized"
+      name: "GPT-4",
+      parameters: 175,
+      trainingTokens: 1500000000,
+      inferenceSpeed: 500,
+      costPerToken: 0.03,
+      releaseDate: "2023-03-14"
     }
   },
   { 
@@ -39,12 +53,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "General-purpose AI assistant",
     llms: "GPT-4",
     metrics: {
-      parameters: "175B (GPT-4)",
-      trainingDataSize: "1.0T tokens",
-      averageLatency: "600-900ms",
-      supportedLanguages: 85,
-      apiPricing: "Subscription based",
-      hardwareRequirements: "Cloud-based"
+      name: "GPT-4",
+      parameters: 175,
+      trainingTokens: 1000000000,
+      inferenceSpeed: 600,
+      costPerToken: "Subscription based",
+      releaseDate: "2023-03-14"
     }
   },
   { 
@@ -54,12 +68,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "General-purpose AI assistant",
     llms: "Gemini",
     metrics: {
-      parameters: "785B (Ultra)",
-      trainingDataSize: "Estimated 2.0T tokens",
-      averageLatency: "400-600ms",
-      supportedLanguages: 120,
-      apiPricing: "$0.025/1K tokens",
-      hardwareRequirements: "TPU optimized"
+      name: "Gemini",
+      parameters: 785,
+      trainingTokens: 2000000000,
+      inferenceSpeed: 400,
+      costPerToken: 0.025,
+      releaseDate: "2023-05-10"
     }
   },
   { 
@@ -69,12 +83,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "Accuracy-focused AI search engine",
     llms: "Mistral 7B, Llama 2",
     metrics: {
-      parameters: "70B (Combined)",
-      trainingDataSize: "800B tokens",
-      averageLatency: "300-500ms",
-      supportedLanguages: 30,
-      apiPricing: "Free tier available",
-      hardwareRequirements: "Mixed precision"
+      name: "Mistral 7B",
+      parameters: 70,
+      trainingTokens: 800000000,
+      inferenceSpeed: 300,
+      costPerToken: "Free tier available",
+      releaseDate: "2023-07-04"
     }
   },
   { 
@@ -84,12 +98,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "Business-focused AI assistant",
     llms: "Claude 3",
     metrics: {
-      parameters: "400B+",
-      trainingDataSize: "Estimated 1.2T tokens",
-      averageLatency: "450-750ms",
-      supportedLanguages: 75,
-      apiPricing: "$0.028/1K tokens",
-      hardwareRequirements: "Cloud optimized"
+      name: "Claude 3",
+      parameters: 400,
+      trainingTokens: 1200000000,
+      inferenceSpeed: 450,
+      costPerToken: 0.028,
+      releaseDate: "2023-07-14"
     }
   },
   { 
@@ -99,12 +113,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "General-purpose AI search engine",
     llms: "Grok 2, Grok 3",
     metrics: {
-      parameters: "300B+",
-      trainingDataSize: "Real-time training",
-      averageLatency: "550-850ms",
-      supportedLanguages: 45,
-      apiPricing: "Subscription only",
-      hardwareRequirements: "Custom hardware"
+      name: "Grok 2",
+      parameters: 300,
+      trainingTokens: "Real-time training",
+      inferenceSpeed: 550,
+      costPerToken: "Subscription only",
+      releaseDate: "2023-07-14"
     }
   },
   { 
@@ -114,12 +128,12 @@ export const marketShareData: MarketShareEntry[] = [
     description: "General-purpose AI search engine",
     llms: "DeepSeek V3",
     metrics: {
-      parameters: "200B",
-      trainingDataSize: "700B tokens",
-      averageLatency: "600-900ms",
-      supportedLanguages: 25,
-      apiPricing: "Contact sales",
-      hardwareRequirements: "GPU optimized"
+      name: "DeepSeek V3",
+      parameters: 200,
+      trainingTokens: 700000000,
+      inferenceSpeed: 600,
+      costPerToken: "Contact sales",
+      releaseDate: "2023-07-14"
     }
   }
 ];
