@@ -1,13 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlatformData } from "@shared/data";
 
 interface PlatformComparisonProps {
-  data: Array<{
-    name: string;
-    marketShare: number;
-    growth: number;
-    revenue: number;
-  }>;
+  data: PlatformData[];
 }
 
 export function PlatformComparison({ data }: PlatformComparisonProps) {

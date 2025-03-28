@@ -1,15 +1,7 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { LLMMetrics } from "@shared/data";
 
 interface LLMMetricsGridProps {
-  data: Array<{
-    name: string;
-    parameters: number;
-    trainingTokens: number | string;
-    inferenceSpeed: number;
-    costPerToken: number | string;
-    releaseDate: string;
-  }>;
+  data: LLMMetrics[];
 }
 
 export function LLMMetricsGrid({ data }: LLMMetricsGridProps) {

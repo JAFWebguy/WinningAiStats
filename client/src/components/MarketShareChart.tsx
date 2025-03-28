@@ -1,12 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MarketShareData } from "@shared/data";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
 interface MarketShareChartProps {
-  data: Array<{
-    name: string;
-    value: number;
-    color: string;
-  }>;
+  data: MarketShareData[];
 }
 
 export function MarketShareChart({ data }: MarketShareChartProps) {
