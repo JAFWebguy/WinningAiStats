@@ -187,7 +187,6 @@ export function Dashboard() {
     </div>
   );
 }
-
 // Helper function to get colors for platforms
 function getColorForPlatform(name: string): string {
   const colors: Record<string, string> = {
