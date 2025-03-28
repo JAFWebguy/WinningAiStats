@@ -1,17 +1,27 @@
 import { Card } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { MarketShareChart } from "@/components/MarketShareChart";
-import { GrowthChart } from "@/components/GrowthChart";
+import { MarketShareChart, MarketShareData } from "@/components/MarketShareChart";
+import { GrowthChart, PlatformData } from "@/components/GrowthChart";
 import { StatsCard } from "@/components/StatsCard";
 import { useWebSocket } from "@/hooks/useWebSocket";
-import { marketShareData as initialData, PlatformData, LLMMetrics } from "@shared/data";
 import { InsightsGenerator } from "@/components/InsightsGenerator";
 import { Footer } from "@/components/Footer";
 import { ChartSkeleton, TableRowSkeleton } from "@/components/ui/skeleton";
-import { LLMMetricsGrid } from "@/components/LLMMetricsGrid";
+import { LLMMetricsGrid, LLMMetrics } from "@/components/LLMMetricsGrid";
 import { PlatformComparison } from "@/components/PlatformComparison";
 import { HistoricalData } from "@/components/HistoricalData";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+// Initial data to start with before WebSocket connects
+const initialData = [
+  { name: "ChatGPT", share: 59.70, growth: 8 },
+  { name: "Microsoft Copilot", share: 14.40, growth: 6 },
+  { name: "Google Gemini", share: 13.50, growth: 5 },
+  { name: "Perplexity", share: 6.20, growth: 10 },
+  { name: "Claude AI", share: 3.20, growth: 14 },
+  { name: "Grok", share: 0.80, growth: 12 },
+  { name: "Deepseek", share: 0.70, growth: 10 }
+];
 
 // Sample data for demonstration
 const samplePlatformData: PlatformData[] = [
@@ -53,18 +63,26 @@ const sampleLLMMetrics: LLMMetrics[] = [
 
 export function Dashboard() {
   const { data: marketShareData, error, isConnected, isReconnecting } = useWebSocket(initialData);
-  const [platformData] = useState(samplePlatformData);
-  const [llmMetrics] = useState(sampleLLMMetrics);
+  const [platformData] = useState<PlatformData[]>(samplePlatformData);
+  const [llmMetrics] = useState<LLMMetrics[]>(sampleLLMMetrics);
+  const [chartData, setChartData] = useState<MarketShareData[]>([]);
 
   // Create a combined loading state
   const isLoading = !isConnected || isReconnecting;
 
-  // Convert MarketShareEntry[] to MarketShareData[]
-  const marketShareChartData = marketShareData.map(entry => ({
-    name: entry.name,
-    value: entry.share,
-    color: getColorForPlatform(entry.name)
-  }));
+  // Convert WebSocket data to chart data format
+  useEffect(() => {
+    if (marketShareData && marketShareData.length > 0) {
+      setChartData(marketShareData.map(entry => ({
+        name: entry.name,
+        value: entry.share,
+        color: getColorForPlatform(entry.name)
+      })));
+    } else {
+      // Fallback to empty array if no data
+      setChartData([]);
+    }
+  }, [marketShareData]);
 
   if (error) {
     console.error('WebSocket error:', error);
@@ -103,7 +121,7 @@ export function Dashboard() {
           />
           <StatsCard
             title="Total Revenue"
-            value={`$${(platformData.reduce((sum, item) => sum + item.revenue, 0) / 1000000000).toFixed(2)}B`}
+            value={`$${(platformData.reduce((sum, item) => sum + (item.revenue || 0), 0) / 1000000000).toFixed(2)}B`}
             description="Combined revenue of all platforms"
             icon="dollar-sign"
           />
@@ -115,7 +133,7 @@ export function Dashboard() {
             {isLoading ? (
               <ChartSkeleton />
             ) : (
-              <MarketShareChart data={marketShareChartData} />
+              <MarketShareChart data={chartData} />
             )}
           </Card>
           <Card className="p-6">
